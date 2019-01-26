@@ -9,6 +9,8 @@ public class WalkAnimation : MonoBehaviour
     public Sprite idleSprite;
     public Sprite walkLeftSprite;
     public Sprite walkRightSprite;
+    public Sprite jumpUpSprite;
+    public Sprite jumpDownSprite;
     public Sprite damageSprite;
     [Header("Animation Variables")]
     [Range(0.01f, 0.5f)]
@@ -52,29 +54,48 @@ public class WalkAnimation : MonoBehaviour
     /// </summary>
 	void Update()
     {
+        //Sprite renderer component reference
         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
 
-        if(this.transform.parent.GetComponent<PlayerMovement>().IsMoving)
+        //If the player is NOT in the air...
+        if(!this.transform.parent.GetComponent<PlayerMovement>().IsJumping)
         {
-            if(walkTimer == 0.0f && walkIndex == 0)
+            //If the player is moving...
+            if (this.transform.parent.GetComponent<PlayerMovement>().IsMoving)
             {
-                renderer.sprite = walkLeftSprite;
-            }
+                //If the player just started walking, set its sprite to the first walk animation sprite
+                if (walkTimer == 0.0f && walkIndex == 0)
+                {
+                    renderer.sprite = walkLeftSprite;
+                }
 
-            if (IncrementTimer(ref walkTimer) >= walkSpeed) 
+                //If the timer goes over the walk speed time
+                if (IncrementTimer(ref walkTimer) >= walkSpeed)
+                {
+                    walkTimer = 0.0f;
+                    //Increment the sprite in the animation index
+                    walkIndex++;
+                    if (idleSprite != null && walkSprites != null)
+                        renderer.sprite = walkSprites[walkIndex % walkSprites.Length]; //Mod % 4 to only get 4 frames regardless of walkIndex value
+                }
+            }
+            //If the player is NOT walking...
+            else
             {
                 walkTimer = 0.0f;
-                walkIndex++;
-                if (idleSprite != null && walkSprites != null)
-                    renderer.sprite = walkSprites[walkIndex % walkSprites.Length]; //Mod % 4 to only get 4 frames regardless of walkIndex value
+                walkIndex = 0;
+                //Set the sprite to idle
+                if (idleSprite != null)
+                    renderer.sprite = idleSprite;
             }
         }
         else
         {
-            walkTimer = 0.0f;
-            walkIndex = 0;
-            if (idleSprite != null)
-                renderer.sprite = idleSprite;
+            //Else make the player look like they're jumping
+            if(this.GetComponentInParent<Rigidbody>().velocity.y > 0)
+                renderer.sprite = jumpUpSprite;
+            else
+                renderer.sprite = jumpDownSprite;
         }
 	}
 
@@ -85,7 +106,7 @@ public class WalkAnimation : MonoBehaviour
     /// <returns>The timer's current time.</returns>
     float IncrementTimer(ref float timer)
     {
-        timer = (timer < 0.0f) ? 0.0f : timer;
+        timer = (timer < 0.0f) ? 0.0f : timer; //If the timer is less than 0.0f, set the timer to 0.0f
         timer += Time.deltaTime;
         return timer;
     }
