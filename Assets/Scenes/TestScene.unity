@@ -282,10 +282,12 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: 941264ba83452ec49a6dd3f7a96d1b9d, type: 3}
   walkLeftSprite: {fileID: 21300000, guid: 2c47337df50eaff41989bc5ba2b1db76, type: 3}
   walkRightSprite: {fileID: 21300000, guid: 522b9722811dd4d47897f25a4dc2bc86, type: 3}
-  jumpUpSprite: {fileID: 0}
-  jumpDownSprite: {fileID: 0}
+  jumpUpSprite: {fileID: 21300000, guid: 95d572b75e97b67478cb40f14f9452e5, type: 3}
+  jumpDownSprite: {fileID: 21300000, guid: 2aeec999eb9092c40a63d71ed69f2cb8, type: 3}
   damageSprite: {fileID: 0}
   walkSpeed: 0.2
+  smokeEffect: {fileID: 1519530981656852, guid: 7b79cf43c695c0a46abe1340d2e6c623,
+    type: 2}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0

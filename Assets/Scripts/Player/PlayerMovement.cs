@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 100.0f;
     [Range(1.0f, 50.0f)]
     public float gravity = 9.81f;
+    
     #endregion
 
     #region Private Variables

@@ -15,6 +15,8 @@ public class WalkAnimation : MonoBehaviour
     [Header("Animation Variables")]
     [Range(0.01f, 0.5f)]
     public float walkSpeed;
+    [Header("Effects")]
+    public GameObject smokeEffect;
     #endregion
 
     #region Private Variables
@@ -78,6 +80,18 @@ public class WalkAnimation : MonoBehaviour
                     if (idleSprite != null && walkSprites != null)
                         renderer.sprite = walkSprites[walkIndex % walkSprites.Length]; //Mod % 4 to only get 4 frames regardless of walkIndex value
                 }
+
+                //Spawn and reposition smoke effect
+                if (smokeEffect != null)
+                {
+                    GameObject effect = GameObject.Instantiate(smokeEffect) as GameObject;
+                    effect.AddComponent<FX_Smoke>();
+                    effect.transform.position = 
+                    this.transform.position + 
+                    new Vector3(0, -this.GetComponentInParent<Collider>().bounds.extents.y + .5f, 0) + 
+                    new Vector3(Random.Range(-0.5f, 0.5f), 0.0f, Random.Range(-0.3f, 0.3f));
+                }
+
             }
             //If the player is NOT walking...
             else
