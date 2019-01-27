@@ -57,15 +57,21 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, this.GetComponent<Collider>().bounds.extents.y + jumpCheck))
         {
-            float floorDistance = Vector3.Distance(hit.point, this.transform.position);
-            isJumping = !(floorDistance < jumpCheck);
+            if(hit.transform.gameObject.name.Contains("Ground"))
+            {
+                float floorDistance = Vector3.Distance(hit.point, this.transform.position);
+                isJumping = !(floorDistance < jumpCheck);
+            }
         }
 
         if(!isJumping)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                body.AddForce(this.transform.up * jumpForce * 10.0f);
+                body.AddForce(this.transform.up * jumpForce * 10.0f);  
+                for(int i = 0; i < 100; i++)
+                    this.GetComponentInChildren<PlayerAnimation>().CreateSmokeParticle();
+                isJumping = true;
             }
         }
         else

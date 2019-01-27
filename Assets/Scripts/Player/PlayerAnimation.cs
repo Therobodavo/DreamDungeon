@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkAnimation : MonoBehaviour
+public class PlayerAnimation : MonoBehaviour
 {
     #region Public Variables
     [Header("Animation Sprites")]
@@ -31,6 +31,8 @@ public class WalkAnimation : MonoBehaviour
         Left  = 2,
         Hurt  = 3
     }
+
+    private GameObject smokeEffectParent;
     #endregion
 
     /// <summary>
@@ -49,6 +51,8 @@ public class WalkAnimation : MonoBehaviour
             walkSprites[2] = walkRightSprite;
             walkSprites[3] = idleSprite;     //Frame 3 (Frames 1-4)
         }
+
+        smokeEffectParent = new GameObject("Smoke Parent");
     }
 	
     /// <summary>
@@ -81,17 +85,7 @@ public class WalkAnimation : MonoBehaviour
                         renderer.sprite = walkSprites[walkIndex % walkSprites.Length]; //Mod % 4 to only get 4 frames regardless of walkIndex value
                 }
 
-                //Spawn and reposition smoke effect
-                if (smokeEffect != null)
-                {
-                    GameObject effect = GameObject.Instantiate(smokeEffect) as GameObject;
-                    effect.AddComponent<FX_Smoke>();
-                    effect.transform.position = 
-                    this.transform.position + 
-                    new Vector3(0, -this.GetComponentInParent<Collider>().bounds.extents.y + .5f, 0) + 
-                    new Vector3(Random.Range(-0.5f, 0.5f), 0.0f, Random.Range(-0.3f, 0.3f));
-                }
-
+                CreateSmokeParticle();
             }
             //If the player is NOT walking...
             else
@@ -107,9 +101,14 @@ public class WalkAnimation : MonoBehaviour
         {
             //Else make the player look like they're jumping
             if(this.GetComponentInParent<Rigidbody>().velocity.y > 0)
+            {
                 renderer.sprite = jumpUpSprite;
+                CreateSmokeParticle();
+            }
             else
+            {
                 renderer.sprite = jumpDownSprite;
+            } 
         }
 	}
 
@@ -123,5 +122,24 @@ public class WalkAnimation : MonoBehaviour
         timer = (timer < 0.0f) ? 0.0f : timer; //If the timer is less than 0.0f, set the timer to 0.0f
         timer += Time.deltaTime;
         return timer;
+    }
+
+    /// <summary>
+    /// Creates a smoke particle beneath the player's feet.
+    /// </summary>
+    public void CreateSmokeParticle()
+    {
+        //Spawn and reposition smoke effect
+        if (smokeEffect != null)
+        {
+            GameObject effect = GameObject.Instantiate(smokeEffect) as GameObject;
+            effect.AddComponent<FX_Smoke>();
+            effect.transform.position =
+            this.transform.position +
+            new Vector3(0, -this.GetComponentInParent<Collider>().bounds.extents.y + .2f, 0) +
+            new Vector3(Random.Range(-0.5f, 0.5f), 0.0f, Random.Range(-0.3f, 0.3f)) +
+            -this.transform.forward * .3f;
+            effect.transform.parent = smokeEffectParent.transform;
+        }
     }
 }
