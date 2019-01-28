@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, -this.transform.up, out hit, this.GetComponent<Collider>().bounds.extents.y + jumpCheck))
         {
-            if(hit.transform.gameObject.name.Contains("Ground"))
+            if(!hit.transform.gameObject.name.Contains("Smoke"))
             {
                 float floorDistance = Vector3.Distance(hit.point, this.transform.position);
                 isJumping = !(floorDistance < jumpCheck);
