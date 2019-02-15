@@ -18,14 +18,15 @@ public  int index;
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         timer += 1 * Time.deltaTime;
         if(timer * Time.deltaTime > timeStop2 * Time.deltaTime)
         {
             index = 0;
         }
 
-      if(Input.GetAxis("click") > 0 && timer * Time.deltaTime > timeStop * Time.deltaTime)
+        ///Changed Input check to OR to eliminate it without deleting - Schrupp
+      if(Input.GetAxis("click") > 0 || timer * Time.deltaTime > timeStop * Time.deltaTime)
         {
             index++;
             timer = 0;
