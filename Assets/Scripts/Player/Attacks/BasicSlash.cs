@@ -46,16 +46,25 @@ public  int index;
     {
         if(index > 0 && timer * Time.deltaTime < timeStop * Time.deltaTime)
         {
-            if(other.tag == "Enenmy" || other.tag == "Pushable")
+            if(other.tag == "Enenmy")
+            {
+               
+                Vector3 force = transform.forward.normalized;
+           
+                other.GetComponent<BasicEnnemy>().knockBack(force, 8);
+
+
+
+            }
+            else if (other.tag == "Pushable")
             {
                 Rigidbody rigidbody = other.GetComponent<Rigidbody>();
                 Vector3 force = transform.forward.normalized;
                 force.y = 0.5f;
                 rigidbody.velocity += force * pushForce;
-            
-              
+
             }
-           
+
         }
 
     }
