@@ -10,24 +10,32 @@ public class StamperScript : BasicEnnemy
 
   public  float atTimer = 0;//attack timer
     float atCheck;
-    float circleTimer = 0;
+    float circleTimer = 0; // circle timer
 
-    float circDir;
-    float speed = 3;
+    float wTimer = 500; //timer for wondering
+    float wX = 0;
+    float wZ = 0;
+
+    float circDir; // current direction of circle
+    float speed = 4;
+    float wSpeed = 2;
+    
+
 
     public void Start()
     {
         init();
-        speed = Random.Range(2f, 3.5f);
+        health = 7;
+        speed = Random.Range(2f, 4.5f);
         circDir = Random.Range(1, 2);
-         atCheck = Random.Range(340f, 2460f);
- 
+        atCheck = Random.Range(240f, 860f);
+
         if (circDir != 1)
             circDir = -1;
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
     }
 
-
+    //enemy decides what attack he will do 
     public override void chooseAttack()
     {
         atTimer += 1 * Time.deltaTime;
@@ -49,24 +57,26 @@ public class StamperScript : BasicEnnemy
 
     }
 
+    //enemy will charge at player
     public void dashAttack()
     {
-        transform.position += (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 2.5f;
+        transform.position += (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 3.5f;
 
-        if(atTimer > (atCheck + 200) * Time.deltaTime)
+        if(atTimer > (atCheck + 400) * Time.deltaTime)
         {
-            speed = Random.Range(2f, 3.5f);
+            speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
             speed = Random.Range(2f, 3.5f);
-            atCheck = Random.Range(340f, 1460f);
+            atCheck = Random.Range(240f, 860f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
 
         }
     }
 
+    //enemy will ciricle around player
     public void circlePlayer()
     {
         circleTimer += Time.deltaTime * 0.5f;
@@ -83,4 +93,45 @@ public class StamperScript : BasicEnnemy
         transform.position += targetPos;
     }
 
+    public override void wonder()
+    {
+        Vector3 targetPos = new Vector3(0, 0, 0);
+        if (!returnHome)
+        {
+            wTimer += Time.deltaTime;
+            if(wTimer > 1000 * Time.deltaTime)
+            {
+              wX = Mathf.Cos(Random.Range(0, 360));
+              wZ = Mathf.Sin(Random.Range(0, 360));
+                wTimer = 0;
+            }
+          
+
+            targetPos = transform.position + (new Vector3(wX, 0, wZ) * 1.5f);
+
+    
+            if((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
+            {
+                returnHome = true;
+            }
+        }
+
+        if (returnHome)
+        {
+            targetPos = startPos;
+            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
+            {
+               returnHome = false;
+            }
+        }
+
+        targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
+
+        targetPos.y = 0;
+
+        transform.position += targetPos;
+
+    }
+
+    
 }

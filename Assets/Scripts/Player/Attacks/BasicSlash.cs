@@ -51,7 +51,7 @@ public  int index;
                
                 Vector3 force = transform.forward.normalized;
            
-                other.GetComponent<BasicEnnemy>().knockBack(force, 8);
+                other.GetComponent<BasicEnnemy>().knockBack(force, 8, 1);
 
 
 
