@@ -28,6 +28,9 @@ public class BasicShoot : MonoBehaviour
             bullet.GetComponent<BulletMove>().pushForce = force;
             bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
             Instantiate(bullet);
+            //Make sure bullet is active after Instantiation ~Schrupp 3/4/19
+            bullet.SetActive(true);
+
             timer = 0;
            
 
