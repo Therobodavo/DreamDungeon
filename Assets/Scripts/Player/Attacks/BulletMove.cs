@@ -25,21 +25,29 @@ public class BulletMove : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
+       
+            if (other.tag == "Enenmy")
+            {
 
-        if (other.tag == "Enenmy" || other.tag == "Pushable" || other.tag == "Wall")
-        {
-            Rigidbody rigidbody = other.GetComponent<Rigidbody>();
-            Vector3 force = transform.forward.normalized * -1;
-            force.y = 0.1f;
-            rigidbody.velocity += force * pushForce;
-            Destroy(gameObject);
+                Vector3 force = transform.forward.normalized;
+
+                other.GetComponent<BasicEnnemy>().knockBack(-force, 4, 1);
+
+
+
+            }
+            else if (other.tag == "Pushable")
+            {
+                Rigidbody rigidbody = other.GetComponent<Rigidbody>();
+                Vector3 force = transform.forward.normalized;
+                force.y = 0.5f;
+                rigidbody.velocity += force * pushForce;
+
+            }
 
         }
-       
 
-        
-
-    }
+    
 }

@@ -51,16 +51,24 @@ public class C_Rotate : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(player.transform.position, -(player.transform.position - this.transform.position), out hit))
         {
-            if (hit.transform.gameObject.name != "Player")
+            if(hit.transform.gameObject.tag == "Enenmy")
             {
-                float distanceCheck = Vector3.Distance(player.transform.position, hit.point);
-                //If the raycast hits an object inbetween the camera and the player...
-                if (distanceCheck < cameraDistance)
+                hit.transform.gameObject.GetComponent<BasicEnnemy>().behindPlayer = true;
+            }
+            else
+            {
+                if (hit.transform.gameObject.name != "Player")
                 {
-                    //Make the cameras distance the distance to that object
-                    newCameraDistance = Mathf.Clamp(distanceCheck - distanceThreshold, 0.1f, cameraDistance);
+                    float distanceCheck = Vector3.Distance(player.transform.position, hit.point);
+                    //If the raycast hits an object inbetween the camera and the player...
+                    if (distanceCheck < cameraDistance)
+                    {
+                        //Make the cameras distance the distance to that object
+                        newCameraDistance = Mathf.Clamp(distanceCheck - distanceThreshold, 0.1f, cameraDistance);
+                    }
                 }
             }
+          
         }
 
         //Normalize the offset and set its magnitude
