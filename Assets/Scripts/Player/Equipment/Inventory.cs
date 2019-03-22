@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public GameObject Shoot;
     public int SelectedAttack = 0;
     public List<ItemBase> Items = new List<ItemBase>();
-    List<Action> ConsumableActions = new List<Action>();
+    public List<Action> ConsumableActions = new List<Action>();
     
     // Start is called before the first frame update
     void Start()
