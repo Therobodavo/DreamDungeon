@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 100.0f;
     [Range(1.0f, 50.0f)]
     public float gravity = 9.81f;
-    
+    [Range(1.0f, 50.0f)]
+    public float health = 20;
     #endregion
 
     #region Private Variables
@@ -27,6 +28,10 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody body;
     private bool isMoving;
     private bool isJumping;
+    private bool invicable = false;
+    private Vector3 acceleration;
+    private float  invTimer; //timer for invicbility frames
+
     #endregion
 
     /// <summary>
@@ -47,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
+        invCheck();
 	}
 
     /// <summary>
@@ -125,11 +131,45 @@ public class PlayerMovement : MonoBehaviour
             {
                 //If no keys are being pressed, multiply is velocity by the slowdown
                 if (body.velocity.magnitude != 0.0f)
-                    body.velocity = body.velocity * (100 - slowdown) / 100.0f;
+                  body.velocity = body.velocity * (100 - slowdown) / 100.0f;
             }
 
             if (body.velocity.magnitude < maxSpeed)
                 body.AddForce(force * body.mass);
+
+        }
+    }
+
+    //method for making the ennemy knock backwords
+    public void knockBack(Vector3 force, float weight, float damge)
+    {
+     
+            invTimer = 0; //invcibility timer
+            force *= weight; // multiplying wieghts
+            health -= damge; // taking damage
+           acceleration += (force / body.mass)/10; //creating accl
+            acceleration.y = 1f;
+           body.velocity += acceleration;
+        invTimer = 0;
+
+
+
+    }
+
+    //method for checking invisnbility frames
+    void invCheck()
+    {
+        invTimer += 1 * Time.deltaTime;
+        if (invTimer < 100 * Time.deltaTime)
+        {
+            invicable = true;
+            GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f); // displaying invcibility
+
+        }
+        else
+        {
+            GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f); // displaying invcibility
+            invicable = false;
 
         }
     }

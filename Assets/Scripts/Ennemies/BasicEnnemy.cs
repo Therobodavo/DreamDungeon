@@ -21,6 +21,8 @@ public class BasicEnnemy : MonoBehaviour
     public Vector3 startPos; //starting position
     [HideInInspector]
     public bool returnHome; //bool checking to see if ennemy needs to return back to its orginal spot
+    [HideInInspector]
+    public Vector3 attackForce;
 
     Vector3 position;
   Vector3 acceleration;
@@ -29,6 +31,9 @@ public float maxSpeed;
     public float mass;
 
     public float health;
+    public float pushEm = 5;
+
+    public bool behindPlayer = false; //bool for when ennemy is behind player
 
 
 
@@ -41,6 +46,11 @@ public float maxSpeed;
     // Update is called once per frame
     void Update()
     {
+        if(behindPlayer)
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
+        else
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+
         invCheck();// checking to see if enemy is inviciable
         detectPlayer(); //detecting where player is
         UpdatePosition(); // updating velocity (for knockback)
@@ -49,6 +59,15 @@ public float maxSpeed;
             chooseAttack(); //if enemy is active he will attack the player
         else
             wonder(); //if enemy isn't active he will wonder around
+
+       
+
+        behindPlayer = false;
+
+        if (!attackOver)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(10f, 1f, 1f, 1f); // displaying invcibility
+        }
         
 
     }
@@ -62,7 +81,7 @@ public float maxSpeed;
             force *= weight; // multiplying wieghts
             health -= damge; // taking damage
             acceleration += force/mass; //creating accl
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f); // displaying invcibility
+            
         }
         //if health drops to 0 baddie dies
         if (health <= 0)
@@ -73,19 +92,22 @@ public float maxSpeed;
     //method for checking invisnbility frames
     void invCheck()
     {
-        if (invTimer < 40 * Time.deltaTime)
+        if (invTimer < 100 * Time.deltaTime)
         {
             invTimer += 1 * Time.deltaTime;
             invicable = true;
-  
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.8f); // displaying invcibility
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+           
             invicable = false;
             //restart velociy and accl
             acceleration = new Vector3(0, 0, 0);
             velocity = new Vector3(0, 0, 0);
+
+            if(!behindPlayer) //fill opacity if ennemy is not invicle or behind player
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
 
         }
     }
@@ -126,6 +148,15 @@ public float maxSpeed;
         }
       
     }
+    private void OnCollisionStay(Collision collision)
+    {
+      
+            Vector3 force = transform.forward;
+
+            collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
+
+       
+    }
 
     //method to add velociy to ennemy when needed
     void UpdatePosition()
@@ -154,7 +185,7 @@ public float maxSpeed;
     }
 
     //method for filling core varables. All ennemies will do this the same way
-   public  void init()
+   public void init()
     {
         rigidbody = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
