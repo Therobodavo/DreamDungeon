@@ -19,7 +19,7 @@ public class BasicShoot : MonoBehaviour
     void Update()
     {
         timer += 1 * Time.deltaTime;
-        if (Input.GetAxis("click2") > 0 && timer * Time.deltaTime > timeStop * Time.deltaTime)
+        if (Input.GetAxis("click") > 0 && timer * Time.deltaTime > timeStop * Time.deltaTime)
         {
             bullet.transform.position = transform.position;
             bullet.GetComponent<BulletMove>().foward = transform.forward;

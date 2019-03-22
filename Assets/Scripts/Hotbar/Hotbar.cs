@@ -29,6 +29,9 @@ public class Hotbar : MonoBehaviour
    //Controls for hotkeys
    KeyCode[] numKeyControls;
 
+   //Reference to player inventory 
+   private Inventory playerInventory;
+
     /*
      * Start Method
      * - Initializes variables/references
@@ -48,6 +51,9 @@ public class Hotbar : MonoBehaviour
 
         //Sets up reference to the selector object
         selector = GameObject.Find("Selector");
+
+        //Sets up reference to player inventory
+        playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
@@ -109,6 +115,7 @@ public class Hotbar : MonoBehaviour
     public void UpdateSelector()
     {
         selector.transform.position = slots[currentSelected].transform.position;
+        playerInventory.SelectedAttack = currentSelected;
     }
 
     /*

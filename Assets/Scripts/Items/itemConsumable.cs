@@ -63,6 +63,6 @@ public class ItemConsumable : ItemBase
 
     public override void UseItem()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("JAMES DO THIS");
     }
 }

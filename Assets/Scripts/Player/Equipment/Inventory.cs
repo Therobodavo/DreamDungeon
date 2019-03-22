@@ -7,8 +7,7 @@ public class Inventory : MonoBehaviour
 {
     public GameObject Slash;
     public GameObject Shoot;
-    public int SelectedMeleeAttack;
-    public int SelectedRangeAttack;
+    public int SelectedAttack = 0;
     public List<ItemBase> Items = new List<ItemBase>();
     List<Action> ConsumableActions = new List<Action>();
     
@@ -17,10 +16,14 @@ public class Inventory : MonoBehaviour
     {
         ConsumableActions.Add(() => Heal());
 
-        Items.Add(new ItemConsumable("Health Potion", 0));
         //Items.Add(new Weapon1("Blue Flame",Slash));
         Items.Add(gameObject.GetComponent<Weapon1>());
         Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Selected = 1;
     }
@@ -38,17 +41,14 @@ public class Inventory : MonoBehaviour
         //{
         //    Items[Selected].UseItem();
         //}
+        Debug.Log("FIRE FIRE: " + SelectedAttack);
         if(Input.GetMouseButtonDown(0) == true)
         {
-            Items[SelectedMeleeAttack].UseItem();
-        }
-        if (Input.GetMouseButtonDown(1) == true)
-        {
-            Items[SelectedRangeAttack].UseItem();
+            Items[SelectedAttack].UseItem();
         }
 
-        Items[SelectedMeleeAttack].Update();
-        Items[SelectedRangeAttack].Update();
+        Items[0].Update();
+        Items[1].Update();
     }
 
     void Heal()
