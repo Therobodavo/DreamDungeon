@@ -150,10 +150,12 @@ public float maxSpeed;
     }
     private void OnCollisionStay(Collision collision)
     {
-      
-            Vector3 force = transform.forward;
+            if(collision.transform.tag == "Player")
+            {
+                Vector3 force = transform.forward;
 
-            collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
+                collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
+            }
 
        
     }
