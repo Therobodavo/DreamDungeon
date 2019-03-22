@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8429192710347291030
 Transform:
   m_ObjectHideFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   timeStop: 0.7
   timeStop2: 1.5
   pushForce: 0.5
+  InactiveTimer: 0.21075632
 --- !u!65 &8429192710347291028
 BoxCollider:
   m_ObjectHideFlags: 0
