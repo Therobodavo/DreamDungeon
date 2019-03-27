@@ -7,6 +7,7 @@ public class BulletMove : MonoBehaviour
     public float pushForce;
     public Vector3 foward;
     public float speed;
+    public bool isPlayer; //checks if bullet is made by player
 
     float timer = 0;
 
@@ -27,7 +28,8 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-       
+        if (isPlayer)
+        {
             if (other.tag == "Enenmy")
             {
 
@@ -46,6 +48,16 @@ public class BulletMove : MonoBehaviour
                 rigidbody.velocity += force * pushForce;
 
             }
+        }
+        else
+        {
+            if (other.tag == "Player")
+            {
+                Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
+                other.gameObject.GetComponent<PlayerMovement>().knockBack(force, 1000, 1);
+            }
+        }
+            
 
         }
 

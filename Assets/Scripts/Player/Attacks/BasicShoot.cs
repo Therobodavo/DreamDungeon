@@ -22,7 +22,8 @@ public class BasicShoot : MonoBehaviour
         if (Input.GetAxis("click") > 0 && timer * Time.deltaTime > timeStop * Time.deltaTime)
         {
             bullet.transform.position = transform.position;
-            bullet.GetComponent<BulletMove>().foward = transform.forward;
+            bullet.GetComponent<BulletMove>().isPlayer = true;
+         bullet.GetComponent<BulletMove>().foward = transform.forward;
             bullet.GetComponent<BulletMove>().foward.y = 0;
             bullet.GetComponent<BulletMove>().speed = speed;
             bullet.GetComponent<BulletMove>().pushForce = force;

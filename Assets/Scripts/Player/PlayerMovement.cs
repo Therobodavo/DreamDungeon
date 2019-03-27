@@ -29,7 +29,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isMoving;
     private bool isJumping;
     private bool invicable = false;
-    private Vector3 acceleration;
     private float  invTimer; //timer for invicbility frames
 
     #endregion
@@ -143,24 +142,22 @@ public class PlayerMovement : MonoBehaviour
     //method for making the ennemy knock backwords
     public void knockBack(Vector3 force, float weight, float damge)
     {
-     
+        if (!invicable)
+        {
             invTimer = 0; //invcibility timer
             force *= weight; // multiplying wieghts
             health -= damge; // taking damage
-           acceleration += (force / body.mass)/10; //creating accl
-            acceleration.y = 1f;
-           body.velocity += acceleration;
-        invTimer = 0;
-
-
-
+            body.AddRelativeForce(force);
+        }
+          
+     
     }
 
     //method for checking invisnbility frames
     void invCheck()
     {
         invTimer += 1 * Time.deltaTime;
-        if (invTimer < 100 * Time.deltaTime)
+        if (invTimer < 150 * Time.deltaTime)
         {
             invicable = true;
             GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f); // displaying invcibility

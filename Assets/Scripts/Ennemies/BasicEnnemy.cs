@@ -23,6 +23,10 @@ public class BasicEnnemy : MonoBehaviour
     public bool returnHome; //bool checking to see if ennemy needs to return back to its orginal spot
     [HideInInspector]
     public Vector3 attackForce;
+    [HideInInspector]
+    public float atTimer = 0;//attack timer
+    [HideInInspector]
+    public bool hide = false;
 
     Vector3 position;
   Vector3 acceleration;
@@ -31,7 +35,7 @@ public float maxSpeed;
     public float mass;
 
     public float health;
-    public float pushEm = 5;
+ float pushEm = 3000;
 
     public bool behindPlayer = false; //bool for when ennemy is behind player
 
@@ -74,7 +78,7 @@ public float maxSpeed;
     //method for making the ennemy knock backwords
     public void knockBack(Vector3 force, float weight, float damge)
     {
-        if (!invicable)
+        if (!invicable && !hide)
         {
             invTimer = 0; //invcibility timer
             force.y = 0.2f; // setting force of y, so enemy dosn't fly away
@@ -152,12 +156,20 @@ public float maxSpeed;
     {
             if(collision.transform.tag == "Player")
             {
-                Vector3 force = transform.forward;
-
-                collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
-            }
+                Vector3 force = (player.transform.position - transform.position).normalized;
+            collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
+            atTimer = 0;
+        }
 
        
+    }
+
+
+    public void addForce(Vector3 force, float weight)
+    {
+        force.y = 0.2f; // setting force of y, so enemy dosn't fly away
+        force *= weight; // multiplying wieghts
+        acceleration += force / mass; //creating accl
     }
 
     //method to add velociy to ennemy when needed

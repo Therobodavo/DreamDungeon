@@ -8,7 +8,7 @@ public class StamperScript : BasicEnnemy
     //2 attacks. 
     //attack 1- He runs at the player
 
-  public  float atTimer = 0;//attack timer
+  
     float atCheck;
     float circleTimer = 0; // circle timer
 
@@ -132,6 +132,6 @@ public class StamperScript : BasicEnnemy
         transform.position += targetPos;
 
     }
-
     
+
 }

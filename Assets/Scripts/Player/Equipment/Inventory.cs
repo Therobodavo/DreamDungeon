@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
         //{
         //    Items[Selected].UseItem();
         //}
-        Debug.Log("FIRE FIRE: " + SelectedAttack);
+       // Debug.Log("FIRE FIRE: " + SelectedAttack);
         if(Input.GetMouseButtonDown(0) == true)
         {
             Items[SelectedAttack].UseItem();
