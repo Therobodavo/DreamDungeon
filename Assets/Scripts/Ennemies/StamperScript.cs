@@ -8,8 +8,6 @@ public class StamperScript : BasicEnnemy
     //2 attacks. 
     //attack 1- He runs at the player
 
-  
-    float atCheck;
     float circleTimer = 0; // circle timer
 
     float wTimer = 500; //timer for wondering
@@ -25,7 +23,6 @@ public class StamperScript : BasicEnnemy
     public void Start()
     {
         init();
-        health = 7;
         speed = Random.Range(2f, 4.5f);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(240f, 860f);
@@ -39,21 +36,14 @@ public class StamperScript : BasicEnnemy
     public override void chooseAttack()
     {
         atTimer += 1 * Time.deltaTime;
-        if (!invicable)
+        if (atkState != atkStateType.atkOver)
         {
-            if (atTimer > atCheck * Time.deltaTime)
-            {
-                dashAttack();
-                attackOver = false;
-            }
-            else
-            {
-                circlePlayer();
-                attackOver = true;
-            }
-
+            dashAttack();
         }
-
+        else
+        {
+            circlePlayer();
+        }
 
     }
 
@@ -62,15 +52,15 @@ public class StamperScript : BasicEnnemy
     {
         transform.position += (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 3.5f;
 
-        if(atTimer > (atCheck + 400) * Time.deltaTime)
+        if(atTimer > (atCheck + 600) * Time.deltaTime)
         {
             speed = Random.Range(2f, 4.5f);
+            atCheck = Random.Range(440f, 1260f);
+            circleTimer += Random.Range(0, 360) * Time.deltaTime;
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
-            speed = Random.Range(2f, 3.5f);
-            atCheck = Random.Range(240f, 860f);
-            circleTimer += Random.Range(0, 360) * Time.deltaTime;
+            atkState = atkStateType.atkOver;
             atTimer = 0;
 
         }
@@ -96,14 +86,14 @@ public class StamperScript : BasicEnnemy
     public override void wonder()
     {
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (!returnHome)
+        if (state == stateType.wounder)
         {
             wTimer += Time.deltaTime;
             if(wTimer > 1000 * Time.deltaTime)
             {
               wX = Mathf.Cos(Random.Range(0, 360));
               wZ = Mathf.Sin(Random.Range(0, 360));
-                wTimer = 0;
+               wTimer = 0;
             }
           
 
@@ -112,16 +102,16 @@ public class StamperScript : BasicEnnemy
     
             if((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
             {
-                returnHome = true;
+                state = stateType.returnHome;
             }
         }
 
-        if (returnHome)
+        if (state == stateType.returnHome)
         {
             targetPos = startPos;
             if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
             {
-               returnHome = false;
+                state = stateType.wounder;
             }
         }
 

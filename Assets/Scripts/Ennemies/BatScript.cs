@@ -9,7 +9,7 @@ public class BatScript : BasicEnnemy
     //attack 1- He runs at the player
 
 
-    float atCheck;
+
     float circleTimer = 0; // circle timer
 
     float wTimer = 500; //timer for wondering
@@ -43,15 +43,12 @@ public class BatScript : BasicEnnemy
 
     public void flying()
     {
-        if (attackOver)
+        if (atkState == atkStateType.atkOver)
         {
             if (fly > 1f)
                 flyIncr = -0.02f;
             else if (fly < -1f)
-                flyIncr = 0.02f;
-           
-
-          
+                flyIncr = 0.02f;    
         }
         else
         {
@@ -61,8 +58,9 @@ public class BatScript : BasicEnnemy
                 flyIncr = 0.001f;
         }
 
-        if(invicable)
+        if(inState == inStateType.damage)
             flyIncr = 0.04f;
+
         fly += flyIncr;
         Vector3 pos = transform.position;
         pos.y = startFly.y + fly;
@@ -76,19 +74,13 @@ public class BatScript : BasicEnnemy
     public override void chooseAttack()
     {
         atTimer += 1 * Time.deltaTime;
-        if (!invicable)
+        if (atkState != atkStateType.atkOver)
         {
-            if (atTimer > atCheck * Time.deltaTime)
-            {
-                dashAttack();
-                attackOver = false;
-            }
-            else
-            {
-                circlePlayer();
-                attackOver = true;
-            }
-
+            dashAttack();
+        }
+        else
+        {
+            circlePlayer();
         }
 
 
@@ -138,7 +130,7 @@ public class BatScript : BasicEnnemy
     public override void wonder()
     {
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (!returnHome)
+        if (state == stateType.wounder)
         {
             wTimer += Time.deltaTime;
             if (wTimer > 1000 * Time.deltaTime)
@@ -154,16 +146,16 @@ public class BatScript : BasicEnnemy
 
             if ((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
             {
-                returnHome = true;
+                state = stateType.returnHome;
             }
         }
 
-        if (returnHome)
+        if (state == stateType.returnHome)
         {
             targetPos = startPos;
             if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
             {
-                returnHome = false;
+                state = stateType.wounder;
             }
         }
 

@@ -8,7 +8,7 @@ public class HopperScript : BasicEnnemy
  //attack 1- He runs at the player
 
 
-    float atCheck;
+    
     float circleTimer = 0; // circle timer
 
 
@@ -21,7 +21,6 @@ public class HopperScript : BasicEnnemy
     float wSpeed = 2;
 
 
-    float attackChoice; //float that decides which attack will be used next
 
     public float jumpWeight = 10;
     public float bulletSpeed = 0.1f;
@@ -45,28 +44,17 @@ public class HopperScript : BasicEnnemy
     public override void chooseAttack()
     {
         atTimer += 1 * Time.deltaTime;
-        if (!invicable)
-        {
-            if (atTimer > atCheck * Time.deltaTime)
-            {
-                if(attackChoice < 2)
-                {
-                    diveAttack();
-                    attackOver = false;
-                }
-                else
-                {
-                    bulletAttack();
-                    attackOver = false;
-                }
-            }
-            else
-            {
-                circlePlayer();
-                attackOver = true;
-            }
 
-        }
+
+        if (atkState == atkStateType.atk1)
+            diveAttack();
+        else if (atkState != atkStateType.atkOver)       
+            bulletAttack();  
+        else
+            circlePlayer();
+      
+
+
 
 
     }
@@ -89,7 +77,8 @@ public class HopperScript : BasicEnnemy
         speed = Random.Range(2f, 3.5f);
         atCheck = Random.Range(240f, 860f);
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
-        attackChoice = Random.Range(0, 5);
+        atkChoice = Random.Range(0, 3);
+        atkState = atkStateType.atkOver;
 
     }
 
@@ -111,7 +100,8 @@ public class HopperScript : BasicEnnemy
             atCheck = Random.Range(240f, 860f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
-            attackChoice = Random.Range(0, 5);
+           atkChoice = Random.Range(0, 3);
+            atkState = atkStateType.atkOver;
 
         }
  
@@ -139,7 +129,7 @@ public class HopperScript : BasicEnnemy
     public override void wonder()
     {
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (!returnHome)
+        if (state == stateType.wounder)
         {
             wTimer += Time.deltaTime;
             if (wTimer > 1000 * Time.deltaTime)
@@ -155,16 +145,16 @@ public class HopperScript : BasicEnnemy
 
             if ((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
             {
-                returnHome = true;
+                state = stateType.returnHome;
             }
         }
 
-        if (returnHome)
+        if (state == stateType.returnHome)
         {
             targetPos = startPos;
             if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
             {
-                returnHome = false;
+                state = stateType.wounder;
             }
         }
 
