@@ -44,10 +44,10 @@ public class Inventory : MonoBehaviour
        // Debug.Log("FIRE FIRE: " + SelectedAttack);
         if(Input.GetMouseButtonDown(0) == true)
         {
-            Items[SelectedAttack].UseItem();
+            if(Items[SelectedAttack] != null)
+                Items[SelectedAttack].UseItem();
         }
 
-        Items[0].Update();
         Items[1].Update();
     }
 
