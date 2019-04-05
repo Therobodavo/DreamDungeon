@@ -11,7 +11,7 @@ public class C_Rotate : MonoBehaviour
     public float cameraHeight = 1.5f;      //The camera's hight from the player's perspective
     [Range(0.0f, 15.0f)]
     public float cameraDistance = 7.5f;    //The distance from the player to the camera (on an arc)
-    [Range(0.0f, 1.5f)]
+    [Range(0.0f, 3.0f)]
     public float distanceThreshold = 1.0f; //The extra distance added to the camera's position so it dosen't clip through walls
     #endregion
 
@@ -37,6 +37,7 @@ public class C_Rotate : MonoBehaviour
     {
         //Create an angle axis from mouse input and the original offset vector
         offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * speed, Vector3.up) * offset;
+        offset += Quaternion.AngleAxis(Input.GetAxis("Mouse Y") * speed, -Vector3.right) * offset;
 
         //Set where the camera *should* be after movement
         Vector3 goalPosition = player.transform.position + offset;
