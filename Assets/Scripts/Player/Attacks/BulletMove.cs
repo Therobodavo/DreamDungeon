@@ -54,7 +54,6 @@ public class BulletMove : MonoBehaviour
             if (other.tag == "Player")
             {
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
-                other.gameObject.GetComponent<PlayerMovement>().knockBack(force, 1000, 1);
             }
         }
             

@@ -201,7 +201,6 @@ public float maxSpeed;
         if (collision.transform.tag == "Player")
         {
             Vector3 force = (player.transform.position - transform.position).normalized;
-            collision.gameObject.GetComponent<PlayerMovement>().knockBack(force, pushEm, 1);
             atTimer = 0;
         }
 

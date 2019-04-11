@@ -64,10 +64,10 @@ public class PlayerAnimation : MonoBehaviour
         SpriteRenderer renderer = this.GetComponent<SpriteRenderer>();
 
         //If the player is NOT in the air...
-        if(!this.transform.parent.GetComponent<PlayerMovement>().IsJumping)
+        if(false)
         {
             //If the player is moving...
-            if (this.transform.parent.GetComponent<PlayerMovement>().IsMoving)
+            if (false)
             {
                 //If the player just started walking, set its sprite to the first walk animation sprite
                 if (walkTimer == 0.0f && walkIndex == 0)

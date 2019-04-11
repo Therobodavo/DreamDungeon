@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S_Billboard : MonoBehaviour
+public class Billboard : MonoBehaviour
 {
     #region Public Variables
     [Header("Billboarding Speed")]
