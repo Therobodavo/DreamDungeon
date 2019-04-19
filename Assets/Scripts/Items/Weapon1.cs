@@ -2,31 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon1 : ItemBase
+public class Weapon1 : WeaponBase
 {
     public GameObject Slash;
-    public BasicSlash Slashscript;
     float timer = 60;
     //Timer for slashscript
     float slashTimer;
-    public Weapon1(string itemName,GameObject weapon) : base(itemName, Type.Weapon)
+    public Animator animator;
+    public  int index;
+    //float timer;
+    public float timeStop;
+    public float timeStop2;
+    public float pushForce;
+
+    //Time since enabled
+    public float inactiveTimer;
+
+    public bool attacking = false;
+    public Weapon1(string itemName,GameObject weapon)
     {
         Slash = weapon;
-        Slashscript = Slash.GetComponent<BasicSlash>();
+        timer = 200;
+        index = 0;
+        inactiveTimer = 0;
     }
 
     public override void UseItem()
     {
-        Slash.SetActive(true);
-            Slashscript.InactiveTimer = slashTimer;
+            Slash.SetActive(true);
+            inactiveTimer = slashTimer;
             slashTimer = 0;
             timer = 0.7f;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -39,6 +45,87 @@ public class Weapon1 : ItemBase
         {
             Slash.SetActive(false);
             
+        }
+
+         timer += 1 * Time.deltaTime;
+
+        //If InactiveTimer is over 0,  (Just set to active) update timer and reset combo if needed. ~Schrupp
+        if (inactiveTimer > 0)
+        {
+            timer += inactiveTimer;
+
+            //If InactiveTimer (Time since last active) is over timeStop2, reset animation chain. ~Schrupp
+            if (inactiveTimer > timeStop2)
+            {
+                index = 0;
+                timer = timeStop;
+            }
+
+            inactiveTimer = 0;
+        }
+        //
+        
+        if(timer  > timeStop2 )
+        {
+            index = 0;
+        }
+        
+        
+
+
+        ///Changed Input check to OR to eliminate it without deleting - Schrupp
+        if (timer * Time.deltaTime >= timeStop * Time.deltaTime)
+        {
+            index++;
+            timer = 0;
+            if (index > 3)
+            {
+                index = 0;
+                timer = timeStop;
+            }
+             
+        }
+
+
+      
+
+
+        animator.SetInteger("SlashNum", index);
+
+        if(index > 0 && timer * Time.deltaTime < timeStop * Time.deltaTime)
+        {
+            attacking = true;
+        }
+        else
+        {
+            attacking = false;
+        }
+
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(index > 0 && timer * Time.deltaTime < timeStop * Time.deltaTime)
+        {
+            if(other.tag == "Enenmy")
+            {
+               
+                Vector3 force = transform.forward.normalized;
+           
+                other.GetComponent<BasicEnnemy>().knockBack(force, 8, 1);
+
+
+
+            }
+            else if (other.tag == "Pushable")
+            {
+                Rigidbody rigidbody = other.GetComponent<Rigidbody>();
+                Vector3 force = transform.forward.normalized;
+                force.y = 0.5f;
+                rigidbody.velocity += force * pushForce;
+
+            }
+
         }
 
     }

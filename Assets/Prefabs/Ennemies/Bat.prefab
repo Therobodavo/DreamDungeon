@@ -153,9 +153,8 @@ MonoBehaviour:
   state: 0
   inState: 0
   atkState: 0
-  speedDash: 6
-  speedJump: 3
+  speedDash: 5.4
+  speedFly: 3.5
   height1: 1.5
   height2: 0.4
-  distance: 1.5
-  clampSpeed: 0
+  distance: 1.7
