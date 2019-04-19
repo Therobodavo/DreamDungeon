@@ -49,13 +49,13 @@ public class ShooterScript : BasicEnnemy
         Instantiate(bullet);
         bullet.SetActive(true);
         atTimer = 0;
-        atCheck = Random.Range(40f, 460f);
+        atCheck = Random.Range(50f, 160f);
         atkState = atkStateType.atkOver;
     }
 
     public void hideFromPlayer()
     {
-        if ((player.transform.position - transform.position).magnitude < 5.5f)
+        if ((player.transform.position - transform.position).magnitude < circleDistance)
         {
             inState = inStateType.hide;
             GetComponent<SpriteRenderer>().color = new Color(0.5f, 1f, 0.5f, 0.9f); // displaying invcibility

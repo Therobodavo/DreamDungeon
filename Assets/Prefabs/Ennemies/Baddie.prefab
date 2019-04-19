@@ -148,9 +148,9 @@ MonoBehaviour:
   health: 5
   behindPlayer: 0
   speedMax: 450
-  speedMin: 350
+  speedMin: 250
   circleDistance: 1
   state: 0
   inState: 0
   atkState: 0
-  speedDash: 1.2
+  speedDash: 2

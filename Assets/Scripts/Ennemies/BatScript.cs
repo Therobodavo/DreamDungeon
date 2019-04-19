@@ -20,51 +20,43 @@ public class BatScript : BasicEnnemy
     float speed = 4;
     float wSpeed = 2;
 
-    Vector3 startFly;
-    float fly = 0;
-    float flyIncr = 0.1f;
 
+
+    public float speedDash = 2f;
+    public float speedFly = 3;
+  
+    public float height1 = 1f;
+    public float height2 = 0.4f;
+    public float distance;
+    float clampSpeed = 4;
 
     public void Start()
     {
         init();
         health = 7;
-        speed = Random.Range(2f, 4.5f);
+        speed = Random.Range(speedMin,speedMax);
         circDir = Random.Range(1, 2);
-        atCheck = Random.Range(240f, 860f);
+        atCheck = Random.Range(440f, 1200f);
 
         if (circDir != 1)
             circDir = -1;
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
-        startFly = transform.position;
     }
 
 
 
     public void flying()
     {
-        if (atkState == atkStateType.atkOver)
-        {
-            if (fly > 1f)
-                flyIncr = -0.02f;
-            else if (fly < -1f)
-                flyIncr = 0.02f;    
-        }
-        else
-        {
-            if(transform.position.y > player.transform.position.y + 0.05f)
-                flyIncr = -0.05f;
-            else
-                flyIncr = 0.001f;
-        }
+        float height = height1;
+        if (atkState != atkStateType.atkOver && (player.transform.position - transform.position).magnitude < distance)
+              height = height2;
 
-        if(inState == inStateType.damage)
-            flyIncr = 0.04f;
 
-        fly += flyIncr;
-        Vector3 pos = transform.position;
-        pos.y = startFly.y + fly;
-        transform.position = pos;
+
+        Vector3 fwd = transform.TransformDirection(Vector3.down);
+        Vector3 force = new Vector3(0, speedFly, 0);
+        if (Physics.Raycast(transform.position, fwd, height))
+            GetComponent<Rigidbody>().AddForce(force);
 
     }
 
@@ -82,49 +74,53 @@ public class BatScript : BasicEnnemy
         {
             circlePlayer();
         }
-
+        flying();
 
     }
 
     //enemy will charge at player
     public void dashAttack()
     {
-     Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 3.5f;
-        force.y = 0;
-        transform.position += force;
+     Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
 
-        if (atTimer > (atCheck + 400) * Time.deltaTime)
+        
+        force.y = 0;
+        GetComponent<Rigidbody>().AddForce(force);
+
+        if (atTimer > (atCheck + 900) * Time.deltaTime)
         {
             speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
-            speed = Random.Range(2f, 3.5f);
-            atCheck = Random.Range(240f, 860f);
+            speed = Random.Range(speedMin, speedMax);
+            atCheck = Random.Range(440f, 1200f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
 
         }
-        flying();
+   
     }
 
     //enemy will ciricle around player
     public void circlePlayer()
     {
+   
         circleTimer += Time.deltaTime * 0.5f;
 
         float x = Mathf.Cos(circleTimer) * circDir;
         float z = Mathf.Sin(circleTimer) * circDir;
 
-        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * 5.5f);
+        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
         targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
 
         targetPos.y = 0f;
 
-        transform.position += targetPos;
+        GetComponent<Rigidbody>().AddForce(targetPos);
+        Vector3 vel = Vector3.ClampMagnitude(GetComponent<Rigidbody>().velocity, clampSpeed);
+        GetComponent<Rigidbody>().velocity = vel;
 
-        flying();
     }
 
     public override void wonder()
@@ -163,9 +159,9 @@ public class BatScript : BasicEnnemy
 
         targetPos.y = 0;
 
-        transform.position += targetPos;
+        GetComponent<Rigidbody>().AddForce(targetPos);
+        // 
         flying();
-
     }
 
 }

@@ -34,7 +34,7 @@ public class HopperScript : BasicEnnemy
     {
         init();
         health = 7;
-        speed = Random.Range(2f, 4.5f);
+        speed = Random.Range(speedMin,speedMax);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(240f, 860f);
 
