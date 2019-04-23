@@ -16,14 +16,15 @@ public class StamperScript : BasicEnnemy
 
     float circDir; // current direction of circle
     float speed = 4;
-    float wSpeed = 2;
-    
+   float wSpeed = 2;
+
+    public float speedDash = 2f;
 
 
     public void Start()
     {
         init();
-        speed = Random.Range(2f, 4.5f);
+        speed = Random.Range(speedMin, speedMax);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(240f, 860f);
 
@@ -50,15 +51,16 @@ public class StamperScript : BasicEnnemy
     //enemy will charge at player
     public void dashAttack()
     {
-        transform.position += (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 3.5f;
+      Vector3  targetPos = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+        GetComponent<Rigidbody>().AddForce(targetPos);
 
-        if(atTimer > (atCheck + 600) * Time.deltaTime)
+        if (atTimer > (atCheck + 1000) * Time.deltaTime)
         {
-            speed = Random.Range(2f, 4.5f);
+            speed = Random.Range(speedMin ,speedMax);
             atCheck = Random.Range(440f, 1260f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
-            circDir = Random.Range(1, 2);
-            if (circDir != 1)
+            circDir = Random.Range(1, 3);
+            if (circDir != 2)
                 circDir = -1;
             atkState = atkStateType.atkOver;
             atTimer = 0;
@@ -74,13 +76,14 @@ public class StamperScript : BasicEnnemy
         float x = Mathf.Cos(circleTimer) * circDir;
         float z = Mathf.Sin(circleTimer) * circDir;
 
-        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * 5.5f);
+        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
         targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
 
         targetPos.y = 0;
 
-        transform.position += targetPos;
+      //  transform.position += targetPos;
+        GetComponent<Rigidbody>().AddForce(targetPos);
     }
 
     public override void wonder()
@@ -119,7 +122,7 @@ public class StamperScript : BasicEnnemy
 
         targetPos.y = 0;
 
-        transform.position += targetPos;
+        GetComponent<Rigidbody>().AddForce(targetPos);
 
     }
     

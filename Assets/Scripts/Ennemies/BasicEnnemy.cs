@@ -10,7 +10,8 @@ public class BasicEnnemy : MonoBehaviour
     public  GameObject player; // player gameobject
 
     float invTimer; //timer for invicbility frames
-  public  int attackRgen; // int value that determines what attack the ennmy will use
+    [HideInInspector]
+    public  int attackRgen; // int value that determines what attack the ennmy will use
     [HideInInspector]
     public Vector3 startPos; //starting position
     [HideInInspector]
@@ -24,14 +25,20 @@ public class BasicEnnemy : MonoBehaviour
  
     Vector3 position;
   Vector3 acceleration;
-public float maxSpeed;
-   public Vector3 velocity;
-    public float mass;
+ float maxSpeed;
+    [HideInInspector]
+    public Vector3 velocity;
+    float mass = 3;
 
     public float health;
- float pushEm = 3000;
+    float pushEm = 3000;
 
     public bool behindPlayer = false; //bool for when ennemy is behind player
+
+
+    public float speedMax = 4.5f;
+    public float speedMin = 2f;
+    public float circleDistance = 4.5f;
 
     public enum stateType
     {

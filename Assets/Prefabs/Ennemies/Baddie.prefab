@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2886221991529969468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.374, y: 1.1643, z: 5.987}
-  m_LocalScale: {x: 1.2996411, y: 1.3648498, z: 0.46014}
+  m_LocalScale: {x: 0.2037336, y: 0.2139558, z: 0.0721322}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -107,8 +107,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.32, y: 1.6500002, z: 0.89110744}
-  m_Center: {x: 0, y: 0, z: -0.068046756}
+  m_Size: {x: 1.3199998, y: 1.6500002, z: 1.5992365}
+  m_Center: {x: 0, y: 0, z: -0.02961549}
 --- !u!54 &2886221991529969469
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -117,9 +117,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2886221991529969468}
   serializedVersion: 2
-  m_Mass: 500
+  m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.02
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -139,10 +139,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   attackRgen: 0
-  isActive: 0
-  attackOver: 0
-  invicable: 0
-  maxSpeed: 0.07
-  mass: 6
-  health: 0
+  startPos: {x: 0, y: 0, z: 0}
+  attackForce: {x: 0, y: 0, z: 0}
   atTimer: 0
+  atCheck: 0
+  atkChoice: 0
+  velocity: {x: 0, y: 0, z: 0}
+  health: 5
+  behindPlayer: 0
+  speedMax: 450
+  speedMin: 250
+  circleDistance: 1
+  state: 0
+  inState: 0
+  atkState: 0
+  speedDash: 2
