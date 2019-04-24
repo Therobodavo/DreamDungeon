@@ -96,14 +96,11 @@ public class Hotbar : MonoBehaviour
         SwitchHotBar_Mouse();
 
         //Checks input from the # hotkeys
-     //   Debug.Log(numKeyControls[0]);
-     //   Debug.Log(KeyCode.Alpha1);
         SwitchHotBar_Key();
 
         if (Input.GetMouseButtonDown(0) == true)
         {
-            if (Items[currentSelected] != null)
-                Items[currentSelected].UseItem();
+            Items[currentSelected].UseItem();
         }
 
         Items[0].Update();
