@@ -23,7 +23,7 @@ public class ItemConsumable : ItemBase
     /// <param name="effect">Effect Code</param>
     /// <param name="maxuses">Max Uses</param>
     /// <param name="type">Item Type</param>
-    public ItemConsumable(string itemName, int effect, int maxuses = 1) : base(itemName, Type.Consumable)
+    public ItemConsumable(string itemName, int effect, int maxuses = 1)
     {
         this.effect = effect;
         this.Max_Uses = maxuses;
