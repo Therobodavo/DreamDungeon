@@ -29,8 +29,13 @@ public class Hotbar : MonoBehaviour
    //Controls for hotkeys
    KeyCode[] numKeyControls;
 
-   //Reference to player inventory 
-   private Inventory playerInventory;
+    //Prefabs used for weapons
+    public GameObject Slash;
+    public GameObject Shoot;
+
+    //List to hold items
+    public List<ItemBase> Items = new List<ItemBase>();
+
 
     /*
      * Start Method
@@ -52,8 +57,18 @@ public class Hotbar : MonoBehaviour
         //Sets up reference to the selector object
         selector = GameObject.Find("Selector");
 
-        //Sets up reference to player inventory
-        playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        //Get reference to prefabs
+        Slash = GameObject.Find("Slash");
+        Shoot = GameObject.Find("Shoot");
+
+        //Create items in hotbar inventory
+        Items.Add(gameObject.GetComponent<Weapon1>());
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
@@ -84,6 +99,14 @@ public class Hotbar : MonoBehaviour
 
         //Checks input from the # hotkeys
         SwitchHotBar_Key();
+
+        if (Input.GetMouseButtonDown(0) == true)
+        {
+            if (Items[currentSelected] != null)
+                Items[currentSelected].UseItem();
+        }
+
+        Items[1].Update();
     }
 
 
@@ -115,7 +138,6 @@ public class Hotbar : MonoBehaviour
     public void UpdateSelector()
     {
         selector.transform.position = slots[currentSelected].transform.position;
-        playerInventory.SelectedAttack = currentSelected;
     }
 
     /*
