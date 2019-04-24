@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/Scenes/TestScenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
-    path: Assets/Scenes/TestScene.unity
+    path: Assets/Scenes/TestScenes/TestScene.unity
     guid: 8e9e57962977c344eb163626e53cfd31
   - enabled: 0
     path: Assets/Scenes/Game Scenes/HubWorld.unity
