@@ -26,8 +26,8 @@ public class Hotbar : MonoBehaviour
    private float lastMovedMouse = 0;
    private float delay = .2f;
 
-   //Controls for hotkeys
-   KeyCode[] numKeyControls;
+    //Controls for hotkeys
+    KeyCode[] numKeyControls;
 
     //Prefabs used for weapons
     public GameObject Slash;
@@ -57,17 +57,13 @@ public class Hotbar : MonoBehaviour
         //Sets up reference to the selector object
         selector = GameObject.Find("Selector");
 
-        //Get reference to prefabs
-        Slash = GameObject.Find("Slash");
-        Shoot = GameObject.Find("Shoot");
-
         //Create items in hotbar inventory
-        Items.Add(gameObject.GetComponent<Weapon1>());
-        Items.Add(new Weapon2("Energy Blast", Shoot));
-        Items.Add(new Weapon2("Energy Blast", Shoot));
-        Items.Add(new Weapon2("Energy Blast", Shoot));
-        Items.Add(new Weapon2("Energy Blast", Shoot));
-        Items.Add(new Weapon2("Energy Blast", Shoot));
+        Items.Add(new Weapon1(Slash));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
         Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
@@ -80,6 +76,7 @@ public class Hotbar : MonoBehaviour
         numKeyControls = new KeyCode[7];
 
         numKeyControls[0] = KeyCode.Alpha1;
+
         numKeyControls[1] = KeyCode.Alpha2;
         numKeyControls[2] = KeyCode.Alpha3;
         numKeyControls[3] = KeyCode.Alpha4;
@@ -94,10 +91,13 @@ public class Hotbar : MonoBehaviour
      */
     void Update()
     {
+        
         //Checks input from the mouse scroll wheel
         SwitchHotBar_Mouse();
 
         //Checks input from the # hotkeys
+     //   Debug.Log(numKeyControls[0]);
+     //   Debug.Log(KeyCode.Alpha1);
         SwitchHotBar_Key();
 
         if (Input.GetMouseButtonDown(0) == true)
@@ -106,7 +106,8 @@ public class Hotbar : MonoBehaviour
                 Items[currentSelected].UseItem();
         }
 
-        Items[1].Update();
+        Items[0].Update();
+        
     }
 
 

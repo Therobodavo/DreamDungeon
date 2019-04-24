@@ -19,12 +19,13 @@ public class Weapon1 : WeaponBase
     public float inactiveTimer;
 
     public bool attacking = false;
-    public Weapon1(string itemName,GameObject weapon)
+    public Weapon1(GameObject weapon)
     {
         Slash = weapon;
         timer = 200;
         index = 0;
         inactiveTimer = 0;
+        animator = Slash.GetComponent<Animator>();
     }
 
     public override void UseItem()
@@ -40,10 +41,10 @@ public class Weapon1 : WeaponBase
     {
         timer -= Time.deltaTime;
         slashTimer += Time.deltaTime;
-
+        
         if (timer <= 0)
         {
-            Slash.SetActive(false);
+            //Slash.SetActive(false);
             
         }
 
@@ -100,7 +101,7 @@ public class Weapon1 : WeaponBase
         {
             attacking = false;
         }
-
+        //Debug.Log(index);
     }
 
     private void OnTriggerStay(Collider other)
