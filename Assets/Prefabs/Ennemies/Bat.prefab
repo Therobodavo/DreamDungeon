@@ -146,6 +146,7 @@ MonoBehaviour:
   atkChoice: 0
   velocity: {x: 0, y: 0, z: 0}
   health: 1
+  push: 10
   behindPlayer: 0
   speedMax: 30
   speedMin: 20

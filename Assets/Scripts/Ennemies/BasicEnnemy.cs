@@ -22,16 +22,22 @@ public class BasicEnnemy : MonoBehaviour
     public float atCheck; //when atTimer passes this number, ennemy starts atacking
     [HideInInspector]
     public int atkChoice = 0;
- 
+    [HideInInspector]
     Vector3 position;
-  Vector3 acceleration;
- float maxSpeed;
+    [HideInInspector]
+    Vector3 acceleration;
+    [HideInInspector]
+    float maxSpeed;
     [HideInInspector]
     public Vector3 velocity;
+
+   
     float mass = 3;
 
     public float health;
-    float pushEm = 3000;
+
+    public float push;
+    public int damage;
 
     public bool behindPlayer = false; //bool for when ennemy is behind player
 
@@ -209,6 +215,10 @@ public class BasicEnnemy : MonoBehaviour
         {
             Vector3 force = (player.transform.position - transform.position).normalized;
             atTimer = 0;
+            player.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
+          
+         
+
         }
 
 

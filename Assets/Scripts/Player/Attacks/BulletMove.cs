@@ -9,6 +9,9 @@ public class BulletMove : MonoBehaviour
     public float speed;
     public bool isPlayer; //checks if bullet is made by player
 
+    public int damage;
+    public float push;
+
     float timer = 0;
 
     // Start is called before the first frame update
@@ -51,9 +54,11 @@ public class BulletMove : MonoBehaviour
         }
         else
         {
+            ///need to make it so enemies give the info needed for this
             if (other.tag == "Player")
             {
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
+               other.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
             }
         }
             
