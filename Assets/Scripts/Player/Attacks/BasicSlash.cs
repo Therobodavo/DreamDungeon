@@ -6,15 +6,24 @@ public class BasicSlash : MonoBehaviour
 {
     bool attacking;
     float pushForce;
+
+    Hotbar hotbar;
     public void Start()
     {
-        attacking = GameObject.Find("Player").GetComponent<Weapon1>().attacking;
-        pushForce = GameObject.Find("Player").GetComponent<Weapon1>().pushForce;
+        hotbar = GameObject.Find("Player").GetComponent<Hotbar>();
+        if (hotbar.Items.Count > 0)
+        {
+            attacking = ((Weapon1)hotbar.Items[0]).attacking;
+            pushForce = ((Weapon1)hotbar.Items[0]).pushForce;
+        }
     }
     public void Update()
     {
-        attacking = GameObject.Find("Player").GetComponent<Weapon1>().attacking;
-        pushForce = GameObject.Find("Player").GetComponent<Weapon1>().pushForce;
+        if (hotbar.Items.Count > 0)
+        {
+            attacking = ((Weapon1)hotbar.Items[0]).attacking;
+            pushForce = ((Weapon1)hotbar.Items[0]).pushForce;
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -27,7 +36,7 @@ public class BasicSlash : MonoBehaviour
            
                 other.GetComponent<BasicEnnemy>().knockBack(force, 8, 1);
 
-
+                Debug.Log("matt is weird");
 
             }
             else if (other.tag == "Pushable")

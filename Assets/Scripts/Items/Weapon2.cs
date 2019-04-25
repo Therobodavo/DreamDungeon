@@ -6,7 +6,7 @@ public class Weapon2 : ItemBase
 {
     GameObject Shoot;
     float timer = 60;
-    public Weapon2(string itemName, GameObject weapon)
+    public Weapon2(GameObject weapon)
     {
         Shoot = weapon;
     }
