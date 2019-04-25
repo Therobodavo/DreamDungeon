@@ -34,9 +34,9 @@ public class BasicSlash : MonoBehaviour
                
                 Vector3 force = transform.forward.normalized;
            
-                other.GetComponent<BasicEnnemy>().knockBack(force, 8, 1);
+                other.GetComponent<BasicEnnemy>().knockBack(force,300, 2);
 
-                Debug.Log("matt is weird");
+         
 
             }
             else if (other.tag == "Pushable")

@@ -94,7 +94,7 @@ public class BasicEnnemy : MonoBehaviour
 
         invCheck();// checking to see if enemy is inviciable
         detectPlayer(); //detecting where player is
-        UpdateKnockback(); // updating velocity (for knockback)
+
         attackTimer(); //controls the attack timer and attack stats
       
         if (state == stateType.active)
@@ -135,16 +135,15 @@ public class BasicEnnemy : MonoBehaviour
 
 
     //method for making the ennemy knock backwords
-    public void knockBack(Vector3 force, float weight, float damge)
+    public void knockBack(Vector3 force,float weight, float damge)
     {
         if (inState == inStateType.none)
         {
-            invTimer = 0; //invcibility timer
-            force.y = 0.2f; // setting force of y, so enemy dosn't fly away
-            force *= weight; // multiplying wieghts
-            health -= damge; // taking damage
-            acceleration += force/mass; //creating accl
-   
+            force *= weight;
+            this.GetComponent<Rigidbody>().AddForce(force);
+            health -= damage;
+            invTimer = 0;
+
 
         }
         //if health drops to 0 baddie dies
@@ -211,9 +210,11 @@ public class BasicEnnemy : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.transform.tag == "Player" && inState != inStateType.damage && state != stateType.stunned)
         {
+
             Vector3 force = (player.transform.position - transform.position).normalized;
+            force.y = 0;
             atTimer = 0;
             player.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
           
@@ -227,30 +228,7 @@ public class BasicEnnemy : MonoBehaviour
 
   
 
-    //method to add velociy to ennemy when needed
-    void UpdateKnockback()
-    {
-        // Grab the transform's position so the character
-        //   is updated every frame
-
-        position = transform.position;
-
-        // Add accel to velocity
-        velocity += acceleration;
-        velocity = Vector3.ClampMagnitude(velocity, 0.07f);
-
-      
-        // Add velocity to position
-         position += velocity;
-
-        // Start "fresh" with accel
-        acceleration = Vector3.zero;
-
-        // Set the transform
-        transform.position = position;
-
-
-    }
+    
 
     //method for filling core varables. All ennemies will do this the same way
    public void init()

@@ -25,6 +25,7 @@ public class HopperScript : BasicEnnemy
     public float bulletSpeed = 0.1f;
     public GameObject bullet;
 
+    public float bulletPush;
     public float speedJump;
     float currentJump;
     public float speedDash = 2f;
@@ -69,7 +70,11 @@ public class HopperScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().isPlayer = false;
         bullet.GetComponent<BulletMove>().foward = (player.transform.position - transform.position).normalized;
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
+        bullet.GetComponent<BulletMove>().damage = damage;
+        bullet.GetComponent<BulletMove>().push = bulletPush;
+
         bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
+        
         Instantiate(bullet);
         bullet.SetActive(true);
 

@@ -11,16 +11,13 @@ public class ShooterScript : BasicEnnemy
 
 
     float speed = 4;
-    public float bulletSpeed = 0.1f;
+ 
     public GameObject bullet;
 
 
     public void Start()
     {
         init();
-        speed = Random.Range(2f, 4.5f);
-
-        atCheck = Random.Range(240f, 860f);
 
 
     }
@@ -41,10 +38,13 @@ public class ShooterScript : BasicEnnemy
     //enemy will charge at player
     public void shootAttack()
     {
+        speed = Random.Range(speedMin, speedMax);
         bullet.transform.position = transform.position;
         bullet.GetComponent<BulletMove>().isPlayer = false;
         bullet.GetComponent<BulletMove>().foward = (player.transform.position - transform.position).normalized;
-        bullet.GetComponent<BulletMove>().speed = bulletSpeed;
+        bullet.GetComponent<BulletMove>().speed = speed;
+        bullet.GetComponent<BulletMove>().push = push;
+        bullet.GetComponent<BulletMove>().damage = damage;
         bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         Instantiate(bullet);
         bullet.SetActive(true);

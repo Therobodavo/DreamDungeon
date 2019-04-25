@@ -55,13 +55,21 @@ public class PlayerCamera : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(player.transform.position, this.transform.position - player.transform.position, out hit))
         {
-            float playerToCameraDist = Vector3.Distance(player.transform.position, this.transform.position);
-            float playerToHitDist = Vector3.Distance(player.transform.position, hit.point);
-            if (playerToHitDist < playerToCameraDist)
+            if (hit.transform.gameObject.tag == "Enenmy")
             {
-                Vector3 playerDirection = (player.transform.position - this.transform.position).normalized;
-                this.transform.position = hit.point + (playerDirection * clippingOffset);
+                hit.transform.gameObject.GetComponent<BasicEnnemy>().behindPlayer = true;
             }
+            else
+            {
+                float playerToCameraDist = Vector3.Distance(player.transform.position, this.transform.position);
+                float playerToHitDist = Vector3.Distance(player.transform.position, hit.point);
+                if (playerToHitDist < playerToCameraDist)
+                {
+                    Vector3 playerDirection = (player.transform.position - this.transform.position).normalized;
+                    this.transform.position = hit.point + (playerDirection * clippingOffset);
+                }
+            }
+            
         }
     }
 
