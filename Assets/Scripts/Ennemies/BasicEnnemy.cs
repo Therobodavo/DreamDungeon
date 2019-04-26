@@ -25,11 +25,8 @@ public class BasicEnnemy : MonoBehaviour
     [HideInInspector]
     Vector3 position;
     [HideInInspector]
-    Vector3 acceleration;
-    [HideInInspector]
     float maxSpeed;
-    [HideInInspector]
-    public Vector3 velocity;
+
 
    
     float mass = 3;
@@ -50,8 +47,8 @@ public class BasicEnnemy : MonoBehaviour
     {
         active,
         stunned,
-        returnHome,
-        wounder
+        wounder,
+        dead
     }
 
     public enum inStateType //determines if the ennemy is invicible
@@ -99,7 +96,7 @@ public class BasicEnnemy : MonoBehaviour
       
         if (state == stateType.active)
             chooseAttack(); //if enemy is active he will attack the player
-        else if(state == stateType.wounder || state == stateType.returnHome)
+        else if(state == stateType.wounder)
             wonder(); //if enemy isn't active he will wonder around
 
        
@@ -125,6 +122,9 @@ public class BasicEnnemy : MonoBehaviour
                 atkState = atkStateType.atk5;
             else
                 atkState = atkStateType.atk1;
+
+            if (state == stateType.dead)
+                Destroy(gameObject);
         }
         else
             atkState = atkStateType.atkOver;
@@ -134,21 +134,25 @@ public class BasicEnnemy : MonoBehaviour
 
 
 
-    //method for making the ennemy knock backwords
-    public void knockBack(Vector3 force,float weight, float damge)
+    //method for making the ennemy knock backword
+    public void knockBack(Vector3 force,float weight, float dmg)
     {
+   
         if (inState == inStateType.none)
         {
             force *= weight;
             this.GetComponent<Rigidbody>().AddForce(force);
-            health -= damage;
+            health -= dmg;
             invTimer = 0;
-
-
         }
         //if health drops to 0 baddie dies
         if (health <= 0)
+        {
             Destroy(gameObject);
+            state = stateType.dead;
+            atTimer = 0;
+        }
+        
 
     }
 
@@ -167,12 +171,9 @@ public class BasicEnnemy : MonoBehaviour
             inState = inStateType.none;
             state = stateType.wounder;
             //restart velociy and accl
-            acceleration = new Vector3(0, 0, 0);
-            velocity = new Vector3(0, 0, 0);
 
             if(!behindPlayer) //fill opacity if ennemy is not invicle or behind player
                 GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-
         }
     }
     
@@ -195,14 +196,14 @@ public class BasicEnnemy : MonoBehaviour
         //if player is in sight it will attack
         if(Physics.Raycast(transform.position, (player.transform.position - this.transform.position).normalized, out hit))
         {
-            if (hit.transform.gameObject.name == "Player")
-                state = stateType.active;
-            else
+            if (hit.transform.gameObject.tag == "Wall")
                 state = stateType.wounder;
+            else
+                state = stateType.active;
            
         }
         //even if the play can be seen, if hes too far the ennmy won't attack
-        if((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 7)
+        if((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 4)
         {
             state = stateType.wounder;
         }
@@ -210,7 +211,7 @@ public class BasicEnnemy : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.tag == "Player" && inState != inStateType.damage && state != stateType.stunned)
+        if (collision.transform.tag == "Player" && inState != inStateType.damage && state == stateType.active)
         {
 
             Vector3 force = (player.transform.position - transform.position).normalized;

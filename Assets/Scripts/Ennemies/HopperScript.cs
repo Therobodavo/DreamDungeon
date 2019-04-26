@@ -17,8 +17,8 @@ public class HopperScript : BasicEnnemy
     float wZ = 0;
 
     float circDir; // current direction of circle
-    float speed = 4;
-    float wSpeed = 2;
+    float speed;
+    float wSpeed = 150;
 
 
 
@@ -34,7 +34,6 @@ public class HopperScript : BasicEnnemy
     public void Start()
     {
         init();
-        health = 7;
         speed = Random.Range(speedMin,speedMax);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(240f, 860f);
@@ -86,7 +85,7 @@ public class HopperScript : BasicEnnemy
         atCheck = Random.Range(240f, 860f);
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
         atkChoice = Random.Range(0, 3);
-        atkState = atkStateType.atkOver;
+ 
 
     }
 
@@ -120,7 +119,6 @@ public class HopperScript : BasicEnnemy
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
            atkChoice = Random.Range(0, 3);
-            atkState = atkStateType.atkOver;
 
         }
  
@@ -147,42 +145,35 @@ public class HopperScript : BasicEnnemy
 
     public override void wonder()
     {
+
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (state == stateType.wounder)
+
+        if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
         {
             wTimer += Time.deltaTime;
-            if (wTimer > 1000 * Time.deltaTime)
+            if (wTimer > 250 * Time.deltaTime)
             {
                 wX = Mathf.Cos(Random.Range(0, 360));
                 wZ = Mathf.Sin(Random.Range(0, 360));
                 wTimer = 0;
             }
 
-
             targetPos = transform.position + (new Vector3(wX, 0, wZ) * 1.5f);
 
-
-            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
-            {
-                state = stateType.returnHome;
-            }
         }
-
-        if (state == stateType.returnHome)
+        else
         {
             targetPos = startPos;
-            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
-            {
-                state = stateType.wounder;
-            }
+
         }
 
         targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
 
-        targetPos.y = 0.05f;
+        targetPos.y = 0.0f;
 
         //   transform.position += targetPos;
         GetComponent<Rigidbody>().AddForce(targetPos);
+        jumpControl();
     }
 
 }

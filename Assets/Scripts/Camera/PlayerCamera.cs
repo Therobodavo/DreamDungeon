@@ -59,7 +59,7 @@ public class PlayerCamera : MonoBehaviour
             {
                 hit.transform.gameObject.GetComponent<BasicEnnemy>().behindPlayer = true;
             }
-            else
+            else if(hit.transform.gameObject.tag != "Trigger")
             {
                 float playerToCameraDist = Vector3.Distance(player.transform.position, this.transform.position);
                 float playerToHitDist = Vector3.Distance(player.transform.position, hit.point);

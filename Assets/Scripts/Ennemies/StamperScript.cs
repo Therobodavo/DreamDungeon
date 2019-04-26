@@ -15,8 +15,8 @@ public class StamperScript : BasicEnnemy
     float wZ = 0;
 
     float circDir; // current direction of circle
-    float speed = 4;
-   float wSpeed = 2;
+    float speed;
+   float wSpeed = 300;
 
     public float speedDash = 2f;
 
@@ -71,14 +71,14 @@ public class StamperScript : BasicEnnemy
     //enemy will ciricle around player
     public void circlePlayer()
     {
-        circleTimer += Time.deltaTime * 0.5f;
+        circleTimer += Time.deltaTime * 1.5f;
 
         float x = Mathf.Cos(circleTimer) * circDir;
         float z = Mathf.Sin(circleTimer) * circDir;
 
         Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
-        targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * speedMax * 2.0f * Time.deltaTime;
 
         targetPos.y = 0;
 
@@ -89,35 +89,26 @@ public class StamperScript : BasicEnnemy
     public override void wonder()
     {
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (state == stateType.wounder)
+
+        if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
         {
             wTimer += Time.deltaTime;
-            if(wTimer > 1000 * Time.deltaTime)
+            if (wTimer > 250 * Time.deltaTime)
             {
-              wX = Mathf.Cos(Random.Range(0, 360));
-              wZ = Mathf.Sin(Random.Range(0, 360));
-               wTimer = 0;
+                wX = Mathf.Cos(Random.Range(0, 360));
+                wZ = Mathf.Sin(Random.Range(0, 360));
+                wTimer = 0;
             }
-          
 
             targetPos = transform.position + (new Vector3(wX, 0, wZ) * 1.5f);
 
-    
-            if((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
-            {
-                state = stateType.returnHome;
-            }
         }
-
-        if (state == stateType.returnHome)
+        else
         {
             targetPos = startPos;
-            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
-            {
-                state = stateType.wounder;
-            }
-        }
 
+        }
+       
         targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
 
         targetPos.y = 0;

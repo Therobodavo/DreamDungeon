@@ -10,7 +10,7 @@ public class ShooterScript : BasicEnnemy
 
 
 
-    float speed = 4;
+    float speed;
  
     public GameObject bullet;
 
@@ -50,7 +50,7 @@ public class ShooterScript : BasicEnnemy
         bullet.SetActive(true);
         atTimer = 0;
         atCheck = Random.Range(50f, 160f);
-        atkState = atkStateType.atkOver;
+      
     }
 
     public void hideFromPlayer()

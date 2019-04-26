@@ -34,19 +34,12 @@ public class BasicSlash : MonoBehaviour
                
                 Vector3 force = transform.forward.normalized;
            
-                other.GetComponent<BasicEnnemy>().knockBack(force,300, 2);
+                other.GetComponent<BasicEnnemy>().knockBack(force,350, 2);
 
          
 
             }
-            else if (other.tag == "Pushable")
-            {
-                Rigidbody rigidbody = other.GetComponent<Rigidbody>();
-                Vector3 force = transform.forward.normalized;
-                force.y = 0.5f;
-                rigidbody.velocity += force * pushForce;
-
-            }
+           
 
         }
 

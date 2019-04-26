@@ -50,7 +50,6 @@ public class Weapon1 : WeaponBase
         
         if (Time.timeSinceLevelLoad - currentTime >= timeInterval + initialDelay + .1f && attacking)
         {
-            Debug.Log(Time.timeSinceLevelLoad - currentTime);
             attacking = false;
             initialDelay = 0.1f;
             Slash.SetActive(false);
