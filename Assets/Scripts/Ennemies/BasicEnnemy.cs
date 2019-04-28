@@ -41,6 +41,7 @@ public class BasicEnnemy : MonoBehaviour
     public float push;
     public int damage;
 
+    [HideInInspector]
     public bool behindPlayer = false; //bool for when ennemy is behind player
 
 
@@ -70,6 +71,9 @@ public class BasicEnnemy : MonoBehaviour
         atk3,
         atk4,
         atk5,
+        atk6,
+        atk7,
+        atk8,
         atkMove, //circling around player or general movement
         atkOver
 
@@ -144,6 +148,12 @@ public class BasicEnnemy : MonoBehaviour
                 atkState = atkStateType.atk4;
             else if (atkChoice == 5)
                 atkState = atkStateType.atk5;
+            else if (atkChoice == 6)
+                atkState = atkStateType.atk6;
+            else if (atkChoice == 7)
+                atkState = atkStateType.atk7;
+            else if (atkChoice == 8)
+                atkState = atkStateType.atk8;
             else
                 atkState = atkStateType.atk1;
         }
@@ -248,25 +258,30 @@ public class BasicEnnemy : MonoBehaviour
     public virtual void detectPlayer()
     {
         RaycastHit hit;
-        //if player is in sight it will attack
-        if(Physics.Raycast(transform.position, (player.transform.position - this.transform.position).normalized, out hit))
-        {
-            if (hit.transform.gameObject.tag == "Wall")
-                state = stateType.wounder;
-            else
-                state = stateType.active;
 
-           
-           
-        }
-      
-        //even if the play can be seen, if hes too far the ennmy won't attack
-        if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 100)
+        if(state != stateType.dead && state != stateType.stunned)
         {
- 
-            state = stateType.wounder;
-        
+            //if player is in sight it will attack
+            if (Physics.Raycast(transform.position, (player.transform.position - this.transform.position).normalized, out hit))
+            {
+                if (hit.transform.gameObject.tag == "Wall")
+                    state = stateType.wounder;
+                else
+                    state = stateType.active;
+
+
+
+            }
+
+            //even if the play can be seen, if hes too far the ennmy won't attack
+            if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 100)
+            {
+
+                state = stateType.wounder;
+
+            }
         }
+        
       
     }
     private void OnCollisionStay(Collision collision)
