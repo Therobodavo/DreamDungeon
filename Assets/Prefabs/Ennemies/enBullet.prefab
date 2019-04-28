@@ -30,6 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 527602852309731805}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+
   m_LocalPosition: {x: 1978.0847, y: 1.5870316, z: 1537.9358}
   m_LocalScale: {x: 0.09061914, y: 0.09061914, z: 0.09061914}
   m_Children: []
@@ -141,7 +142,7 @@ MonoBehaviour:
   foward: {x: 0.54840803, y: -0.2685075, z: -0.7919295}
   speed: 0.06
   isPlayer: 0
-  damage: 2
+  damage: 0
   push: 10
 --- !u!114 &875015501989559214
 MonoBehaviour:

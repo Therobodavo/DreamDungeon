@@ -94,21 +94,24 @@ public class BasicEnnemy : MonoBehaviour
         else if (inState == inStateType.none)
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
 
-
+        detectPlayer(); //detecting where player is
         invCheck();// checking to see if enemy is inviciable
+
+
 
 
         if (state == stateType.active)
         {
-            chooseAttack(); //if enemy is active he will attack the player
-            attackTimer(); //controls the attack timer and attack stats   
-            detectPlayer(); //detecting where player is
+           chooseAttack(); //if enemy is active he will attack the player
+            
+           attackTimer(); //controls the attack timer and attack stats   
+          
 
         }     
         else if(state == stateType.wounder)
         {
-            wonder(); //if enemy isn't active he will wonder around
-            detectPlayer(); //detecting where player is
+           wonder(); //if enemy isn't active he will wonder around
+
         }      
      
        
@@ -185,6 +188,8 @@ public class BasicEnnemy : MonoBehaviour
         if (state != stateType.stunned && state != stateType.dead)
         {
             sTimer = 0;
+
+
             if (invTimer < 150 * Time.deltaTime)
             {
                 invTimer += 1 * Time.deltaTime;
@@ -196,7 +201,7 @@ public class BasicEnnemy : MonoBehaviour
             else
             {
                 inState = inStateType.none;
-                state = stateType.wounder;
+
                 //restart velociy and accl
 
                 if (!behindPlayer) //fill opacity if ennemy is not invicle or behind player
@@ -250,12 +255,17 @@ public class BasicEnnemy : MonoBehaviour
                 state = stateType.wounder;
             else
                 state = stateType.active;
+
+           
            
         }
+      
         //even if the play can be seen, if hes too far the ennmy won't attack
-        if((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 4)
+        if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 100)
         {
+ 
             state = stateType.wounder;
+        
         }
       
     }
@@ -263,7 +273,7 @@ public class BasicEnnemy : MonoBehaviour
     {
         if (collision.transform.tag == "Player" && inState != inStateType.damage && state == stateType.active)
         {
-
+           
             Vector3 force = (player.transform.position - transform.position).normalized;
             force.y = 0;
             atTimer = 0;
