@@ -28,7 +28,6 @@ public class BasicShoot : MonoBehaviour
          bullet.GetComponent<BulletMove>().foward = playerCam.transform.forward;
             //bullet.GetComponent<BulletMove>().foward.y = 0;
             bullet.GetComponent<BulletMove>().speed = speed;
-            bullet.GetComponent<BulletMove>().pushForce = force;
             bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
             Instantiate(bullet);
             //Make sure bullet is active after Instantiation ~Schrupp 3/4/19
