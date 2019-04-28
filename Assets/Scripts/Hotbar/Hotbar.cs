@@ -32,6 +32,7 @@ public class Hotbar : MonoBehaviour
     //Prefabs used for weapons
     public GameObject Slash;
     public GameObject Shoot;
+    public GameObject beam;
 
     //List to hold items
     public List<ItemBase> Items = new List<ItemBase>();
@@ -58,7 +59,7 @@ public class Hotbar : MonoBehaviour
         //Create items in hotbar inventory
         Items.Add(new Weapon1(Slash));
         Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon3(Shoot));
+        Items.Add(new Weapon3(beam));
         Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
