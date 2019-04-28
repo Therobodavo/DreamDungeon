@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class BulletMove : MonoBehaviour
 {
-    public float pushForce;
     public Vector3 foward;
     public float speed;
     public bool isPlayer; //checks if bullet is made by player
+
+    //this script can be made by player or ennemies
+
+    public int damage;
+    public float push;
 
     float timer = 0;
 
@@ -20,7 +24,7 @@ public class BulletMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = transform.position + (foward.normalized * speed);
+        transform.position += (foward * speed);
         timer += 1 * Time.deltaTime;
         if(timer > 300 * Time.deltaTime)
             Destroy(gameObject);
@@ -33,32 +37,23 @@ public class BulletMove : MonoBehaviour
             if (other.tag == "Enenmy")
             {
 
-                Vector3 force = transform.forward.normalized;
+                Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
 
-                other.GetComponent<BasicEnnemy>().knockBack(-force, 4, 1);
-
-
-
-            }
-            else if (other.tag == "Pushable")
-            {
-                Rigidbody rigidbody = other.GetComponent<Rigidbody>();
-                Vector3 force = transform.forward.normalized;
-                force.y = 0.5f;
-                rigidbody.velocity += force * pushForce;
+                other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1);
 
             }
         }
         else
         {
+            ///need to make it so enemies give the info needed for this
             if (other.tag == "Player")
             {
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
+                other.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
             }
         }
-            
 
-        }
+    }
 
-    
+
 }

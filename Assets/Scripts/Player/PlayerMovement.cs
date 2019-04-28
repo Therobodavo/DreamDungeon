@@ -8,6 +8,16 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10.0f;
     [Range(0.01f, 20.0f)]
     public float jumpForce = 10.0f;
+    public int health = 10;
+    public float invcTimer = 10;
+
+    public enum invState //determines if player is invicible
+    {
+       isTrue,
+       isFalse
+    }
+
+    public invState inState;
 
     /// <summary>
     /// Updates the player position based on input.
@@ -16,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         Jump();
+        invincability();
     }
 
     /// <summary>
@@ -62,5 +73,35 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void Push(Vector3 Force, float weight, int damage)
+    {
+        if(inState == invState.isFalse)
+        {
+            Force *= weight;
+            this.GetComponent<Rigidbody>().AddForce(Force);
+            invcTimer = 0;
+            inState = invState.isTrue;
+            health -= damage;
+            
+        }
+
+    }
+
+    void invincability()
+    {
+        if(inState == invState.isTrue)
+        {
+            invcTimer += 1 * Time.deltaTime;
+            GetComponent<SpriteRenderer>().color = new Color(1f, 0.8f, 0.8f, 0.5f); // displaying invcibility
+        }
+        else
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f); // displaying invcibility
+
+        //might wanna add layers later to make it so ennemies go through player when invicble
+
+        if (invcTimer > 100 * Time.deltaTime)
+            inState = invState.isFalse;
     }
 }

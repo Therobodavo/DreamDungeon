@@ -22,16 +22,19 @@ public class BasicEnnemy : MonoBehaviour
     public float atCheck; //when atTimer passes this number, ennemy starts atacking
     [HideInInspector]
     public int atkChoice = 0;
- 
-    Vector3 position;
-  Vector3 acceleration;
- float maxSpeed;
     [HideInInspector]
-    public Vector3 velocity;
+    Vector3 position;
+    [HideInInspector]
+    float maxSpeed;
+
+
+   
     float mass = 3;
 
     public float health;
-    float pushEm = 3000;
+
+    public float push;
+    public int damage;
 
     public bool behindPlayer = false; //bool for when ennemy is behind player
 
@@ -44,8 +47,8 @@ public class BasicEnnemy : MonoBehaviour
     {
         active,
         stunned,
-        returnHome,
-        wounder
+        wounder,
+        dead
     }
 
     public enum inStateType //determines if the ennemy is invicible
@@ -88,12 +91,12 @@ public class BasicEnnemy : MonoBehaviour
 
         invCheck();// checking to see if enemy is inviciable
         detectPlayer(); //detecting where player is
-        UpdateKnockback(); // updating velocity (for knockback)
+
         attackTimer(); //controls the attack timer and attack stats
       
         if (state == stateType.active)
             chooseAttack(); //if enemy is active he will attack the player
-        else if(state == stateType.wounder || state == stateType.returnHome)
+        else if(state == stateType.wounder)
             wonder(); //if enemy isn't active he will wonder around
 
        
@@ -119,6 +122,9 @@ public class BasicEnnemy : MonoBehaviour
                 atkState = atkStateType.atk5;
             else
                 atkState = atkStateType.atk1;
+
+            if (state == stateType.dead)
+                Destroy(gameObject);
         }
         else
             atkState = atkStateType.atkOver;
@@ -128,22 +134,25 @@ public class BasicEnnemy : MonoBehaviour
 
 
 
-    //method for making the ennemy knock backwords
-    public void knockBack(Vector3 force, float weight, float damge)
+    //method for making the ennemy knock backword
+    public void knockBack(Vector3 force,float weight, float dmg)
     {
+   
         if (inState == inStateType.none)
         {
-            invTimer = 0; //invcibility timer
-            force.y = 0.2f; // setting force of y, so enemy dosn't fly away
-            force *= weight; // multiplying wieghts
-            health -= damge; // taking damage
-            acceleration += force/mass; //creating accl
-   
-
+            force *= weight;
+            this.GetComponent<Rigidbody>().AddForce(force);
+            health -= dmg;
+            invTimer = 0;
         }
         //if health drops to 0 baddie dies
         if (health <= 0)
+        {
             Destroy(gameObject);
+            state = stateType.dead;
+            atTimer = 0;
+        }
+        
 
     }
 
@@ -162,12 +171,9 @@ public class BasicEnnemy : MonoBehaviour
             inState = inStateType.none;
             state = stateType.wounder;
             //restart velociy and accl
-            acceleration = new Vector3(0, 0, 0);
-            velocity = new Vector3(0, 0, 0);
 
             if(!behindPlayer) //fill opacity if ennemy is not invicle or behind player
                 GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-
         }
     }
     
@@ -190,14 +196,14 @@ public class BasicEnnemy : MonoBehaviour
         //if player is in sight it will attack
         if(Physics.Raycast(transform.position, (player.transform.position - this.transform.position).normalized, out hit))
         {
-            if (hit.transform.gameObject.name == "Player")
-                state = stateType.active;
-            else
+            if (hit.transform.gameObject.tag == "Wall")
                 state = stateType.wounder;
+            else
+                state = stateType.active;
            
         }
         //even if the play can be seen, if hes too far the ennmy won't attack
-        if((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 7)
+        if((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 4)
         {
             state = stateType.wounder;
         }
@@ -205,10 +211,16 @@ public class BasicEnnemy : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.transform.tag == "Player" && inState != inStateType.damage && state == stateType.active)
         {
+
             Vector3 force = (player.transform.position - transform.position).normalized;
+            force.y = 0;
             atTimer = 0;
+            player.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
+          
+         
+
         }
 
 
@@ -217,30 +229,7 @@ public class BasicEnnemy : MonoBehaviour
 
   
 
-    //method to add velociy to ennemy when needed
-    void UpdateKnockback()
-    {
-        // Grab the transform's position so the character
-        //   is updated every frame
-
-        position = transform.position;
-
-        // Add accel to velocity
-        velocity += acceleration;
-        velocity = Vector3.ClampMagnitude(velocity, 0.07f);
-
-      
-        // Add velocity to position
-         position += velocity;
-
-        // Start "fresh" with accel
-        acceleration = Vector3.zero;
-
-        // Set the transform
-        transform.position = position;
-
-
-    }
+    
 
     //method for filling core varables. All ennemies will do this the same way
    public void init()
