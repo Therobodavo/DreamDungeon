@@ -101,7 +101,11 @@ public class Hotbar : MonoBehaviour
         {
             Items[3].UseItem();
         }
-        
+
+        for (int i = 0; i < 3; i++)
+        {
+            Items[i].Update();
+        }
     }
 
 
