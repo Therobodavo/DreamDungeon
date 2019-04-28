@@ -58,7 +58,7 @@ public class Hotbar : MonoBehaviour
         //Create items in hotbar inventory
         Items.Add(new Weapon1(Slash));
         Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon3(Shoot));
         Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
@@ -101,8 +101,6 @@ public class Hotbar : MonoBehaviour
         {
             Items[3].UseItem();
         }
-
-        Items[0].Update();
         
     }
 
