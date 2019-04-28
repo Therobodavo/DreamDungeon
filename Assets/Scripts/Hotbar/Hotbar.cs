@@ -10,7 +10,7 @@ using UnityEngine;
  */
 public class Hotbar : MonoBehaviour
 {
-   //7 Slot references
+   //4 Slot references
    private GameObject[] slots;
 
    //Selector object reference
@@ -36,6 +36,7 @@ public class Hotbar : MonoBehaviour
     //List to hold items
     public List<ItemBase> Items = new List<ItemBase>();
 
+    public bool switchable = true;
 
     /*
      * Start Method
@@ -49,10 +50,7 @@ public class Hotbar : MonoBehaviour
         slots[0] = GameObject.Find("Weapon1");
         slots[1] = GameObject.Find("Weapon2");
         slots[2] = GameObject.Find("Weapon3");
-        slots[3] = GameObject.Find("Weapon4");
-        slots[4] = GameObject.Find("Weapon5");
-        slots[5] = GameObject.Find("Weapon6");
-        slots[6] = GameObject.Find("Consumable");
+        slots[3] = GameObject.Find("Consumable");
 
         //Sets up reference to the selector object
         selector = GameObject.Find("Selector");
@@ -60,29 +58,24 @@ public class Hotbar : MonoBehaviour
         //Create items in hotbar inventory
         Items.Add(new Weapon1(Slash));
         Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon3(Shoot));
         Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
         unlockedSlots.Add(0);
         unlockedSlots.Add(1);
-        unlockedSlots.Add(6);
+        unlockedSlots.Add(2);
+        unlockedSlots.Add(3);
 
         //Sets default controls for hotkeys
         numKeyControls = new KeyCode[7];
 
         numKeyControls[0] = KeyCode.Alpha1;
-
         numKeyControls[1] = KeyCode.Alpha2;
         numKeyControls[2] = KeyCode.Alpha3;
         numKeyControls[3] = KeyCode.Alpha4;
-        numKeyControls[4] = KeyCode.Alpha5;
-        numKeyControls[5] = KeyCode.Alpha6;
-        numKeyControls[6] = KeyCode.Alpha7;
+
     }
 
     /*
@@ -103,7 +96,11 @@ public class Hotbar : MonoBehaviour
             Items[currentSelected].UseItem();
         }
 
-        Items[0].Update();
+        //Consumables
+        if(Input.GetKeyDown(numKeyControls[3]))
+        {
+            Items[3].UseItem();
+        }
         
     }
 
@@ -145,47 +142,32 @@ public class Hotbar : MonoBehaviour
      */
     private void SwitchHotBar_Key()
     {
-        //Checks input for the 1 Key
-        if(Input.GetKeyDown(numKeyControls[0]) && !isLocked(0))
+        if(switchable)
         {
-            currentSelected = 0;
-            UpdateSelector();
-        }
-        //Checks input for the 2 Key
-        else if(Input.GetKeyDown(numKeyControls[1]) && !isLocked(1))
-        {
-            currentSelected = 1;
-            UpdateSelector();
-        }
-        //Checks input for the 3 Key
-        else if(Input.GetKeyDown(numKeyControls[2]) && !isLocked(2))
-        {
-            currentSelected = 2;
-            UpdateSelector();
-        }
-        //Checks input for the 4 Key
-        else if(Input.GetKeyDown(numKeyControls[3]) && !isLocked(3))
-        {
-            currentSelected = 3;
-            UpdateSelector();
-        }
-        //Checks input for the 5 Key
-        else if(Input.GetKeyDown(numKeyControls[4]) && !isLocked(4))
-        {
-            currentSelected = 4;
-            UpdateSelector();
-        }
-        //Checks input for the 6 Key
-        else if(Input.GetKeyDown(numKeyControls[5]) && !isLocked(5))
-        {
-            currentSelected = 5;
-            UpdateSelector();
-        }
-        //Checks input for the 7 Key
-        else if(Input.GetKeyDown(numKeyControls[6]) && !isLocked(6))
-        {
-            currentSelected = 6;
-            UpdateSelector();
+            //Checks input for the 1 Key
+            if(Input.GetKeyDown(numKeyControls[0]) && !isLocked(0) && currentSelected != 0)
+            {
+                ((WeaponBase)Items[currentSelected]).OffSelect();
+                currentSelected = 0;
+                ((WeaponBase)Items[currentSelected]).OnSelect();
+                UpdateSelector();
+            }
+            //Checks input for the 2 Key
+            else if(Input.GetKeyDown(numKeyControls[1]) && !isLocked(1) && currentSelected != 1)
+            {
+                ((WeaponBase)Items[currentSelected]).OffSelect();
+                currentSelected = 1;
+                ((WeaponBase)Items[currentSelected]).OnSelect();
+                UpdateSelector();
+            }
+            //Checks input for the 3 Key
+            else if(Input.GetKeyDown(numKeyControls[2]) && !isLocked(2) && currentSelected != 2)
+            {
+                ((WeaponBase)Items[currentSelected]).OffSelect();
+                currentSelected = 2;
+                ((WeaponBase)Items[currentSelected]).OnSelect();
+                UpdateSelector();
+            }
         }
     }
 
@@ -199,33 +181,36 @@ public class Hotbar : MonoBehaviour
      */
     private void SwitchHotBar_Mouse()
     {
-        //If there's valid mouse scroll wheel input - based on last input by the mouse
-        if(Input.mouseScrollDelta.y != 0 && Time.timeSinceLevelLoad - lastMovedMouse > delay)
+        if(switchable)
         {
-            //Sets last input to current time
-            lastMovedMouse = Time.timeSinceLevelLoad;
-
-            //Gets value to change index by (-1 to 1)
-            int increment = Mathf.Clamp(Mathf.CeilToInt(Input.mouseScrollDelta.y),-1,1);
-
-            //If between 0 and 6
-            if((unlockedSlots.IndexOf(currentSelected) + increment) < unlockedSlots.Count && (unlockedSlots.IndexOf(currentSelected) + increment) >= 0)
+            //If there's valid mouse scroll wheel input - based on last input by the mouse
+            if(Input.mouseScrollDelta.y != 0 && Time.timeSinceLevelLoad - lastMovedMouse > delay)
             {
-                currentSelected = unlockedSlots[(unlockedSlots.IndexOf(currentSelected) + increment)];
-            }
-            //If above 6
-            else if((unlockedSlots.IndexOf(currentSelected) + increment) >= unlockedSlots.Count)
-            {
-                currentSelected = 0;
-            }
-            //If below 0
-            else
-            {
-                currentSelected = 6;
-            }
+                //Sets last input to current time
+                lastMovedMouse = Time.timeSinceLevelLoad;
 
-            //Update selector position
-            UpdateSelector();
+                //Gets value to change index by (-1 to 1)
+                int increment = Mathf.Clamp(Mathf.CeilToInt(Input.mouseScrollDelta.y),-1,1);
+
+                //If between 0 and 2
+                if((unlockedSlots.IndexOf(currentSelected) + increment) < unlockedSlots.Count - 1 && (unlockedSlots.IndexOf(currentSelected) + increment) >= 0)
+                {
+                    currentSelected = unlockedSlots[(unlockedSlots.IndexOf(currentSelected) + increment)];
+                }
+                //If above 2
+                else if((unlockedSlots.IndexOf(currentSelected) + increment) >= unlockedSlots.Count - 1)
+                {
+                    currentSelected = 0;
+                }
+                //If below 0
+                else
+                {
+                    currentSelected = 2;
+                }
+
+                //Update selector position
+                UpdateSelector();
+            }
         }
     }
 
