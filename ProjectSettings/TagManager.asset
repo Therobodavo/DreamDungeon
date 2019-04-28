@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enenmy
   - Pushable
+  - Wall
+  - Trigger
   layers:
   - Default
   - TransparentFX

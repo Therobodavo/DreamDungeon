@@ -17,21 +17,24 @@ public class HopperScript : BasicEnnemy
     float wZ = 0;
 
     float circDir; // current direction of circle
-    float speed = 4;
-    float wSpeed = 2;
+    float speed;
+    float wSpeed = 150;
 
 
 
-    public float jumpWeight = 10;
     public float bulletSpeed = 0.1f;
     public GameObject bullet;
 
+    public float bulletPush;
+    public float speedJump;
+    float currentJump;
+    public float speedDash = 2f;
+    public float height = 0.1f;
 
     public void Start()
     {
         init();
-        health = 7;
-        speed = Random.Range(2f, 4.5f);
+        speed = Random.Range(speedMin,speedMax);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(240f, 860f);
 
@@ -52,8 +55,8 @@ public class HopperScript : BasicEnnemy
             bulletAttack();  
         else
             circlePlayer();
-      
 
+        jumpControl();
 
 
 
@@ -66,7 +69,11 @@ public class HopperScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().isPlayer = false;
         bullet.GetComponent<BulletMove>().foward = (player.transform.position - transform.position).normalized;
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
+        bullet.GetComponent<BulletMove>().damage = damage;
+        bullet.GetComponent<BulletMove>().push = bulletPush;
+
         bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
+        
         Instantiate(bullet);
         bullet.SetActive(true);
 
@@ -74,11 +81,20 @@ public class HopperScript : BasicEnnemy
         circDir = Random.Range(1, 2);
         if (circDir != 1)
             circDir = -1;
-        speed = Random.Range(2f, 3.5f);
+        speed = Random.Range(speedMin, speedMax);
         atCheck = Random.Range(240f, 860f);
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
         atkChoice = Random.Range(0, 3);
-        atkState = atkStateType.atkOver;
+ 
+
+    }
+
+    public void jumpControl()
+    {
+        Vector3 fwd = transform.TransformDirection(Vector3.down);
+        Vector3 force = new Vector3(0, speedJump, 0);
+        if (Physics.Raycast(transform.position, fwd, height))
+            GetComponent<Rigidbody>().AddForce(force);
 
     }
 
@@ -86,22 +102,23 @@ public class HopperScript : BasicEnnemy
     public void diveAttack()
     {
         
-        Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * 3.5f;
-        force.y += 0.05f;
-        transform.position += force;
+        Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+
+        force.y = 0;
+       // transform.position += force;
+        GetComponent<Rigidbody>().AddForce(force);
     
-        if (atTimer > (atCheck + 400) * Time.deltaTime)
+        if (atTimer > (atCheck + 1000) * Time.deltaTime)
         {
             speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
-            speed = Random.Range(2f, 3.5f);
+            speed = Random.Range(speedMin, speedMax);
             atCheck = Random.Range(240f, 860f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
            atkChoice = Random.Range(0, 3);
-            atkState = atkStateType.atkOver;
 
         }
  
@@ -115,55 +132,50 @@ public class HopperScript : BasicEnnemy
         float x = Mathf.Cos(circleTimer) * circDir;
         float z = Mathf.Sin(circleTimer) * circDir;
 
-        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * Random.Range(5.5f, 7.5f));
+        Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * Random.Range(circleDistance - 0.5f, circleDistance));
 
         targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
 
-        targetPos.y = 0.05f;
+        targetPos.y = 0;
 
-        transform.position += targetPos;
+        // transform.position += targetPos;
 
- 
+        GetComponent<Rigidbody>().AddForce(targetPos);
     }
 
     public override void wonder()
     {
+
         Vector3 targetPos = new Vector3(0, 0, 0);
-        if (state == stateType.wounder)
+
+        if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
         {
             wTimer += Time.deltaTime;
-            if (wTimer > 1000 * Time.deltaTime)
+            if (wTimer > 250 * Time.deltaTime)
             {
                 wX = Mathf.Cos(Random.Range(0, 360));
                 wZ = Mathf.Sin(Random.Range(0, 360));
                 wTimer = 0;
             }
 
-
             targetPos = transform.position + (new Vector3(wX, 0, wZ) * 1.5f);
 
-
-            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 > 6)
-            {
-                state = stateType.returnHome;
-            }
         }
-
-        if (state == stateType.returnHome)
+        else
         {
             targetPos = startPos;
-            if ((startPos.normalized - transform.position.normalized).magnitude * 1000 < 3.5f)
-            {
-                state = stateType.wounder;
-            }
+
         }
 
         targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
 
-        targetPos.y = 0.05f;
+        targetPos.y = 0.0f;
 
-        transform.position += targetPos;
-
+        //   transform.position += targetPos;
+        GetComponent<Rigidbody>().AddForce(targetPos);
+        jumpControl();
     }
 
 }
+
+

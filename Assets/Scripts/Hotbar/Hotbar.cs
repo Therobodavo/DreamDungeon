@@ -26,11 +26,16 @@ public class Hotbar : MonoBehaviour
    private float lastMovedMouse = 0;
    private float delay = .2f;
 
-   //Controls for hotkeys
-   KeyCode[] numKeyControls;
+    //Controls for hotkeys
+    KeyCode[] numKeyControls;
 
-   //Reference to player inventory 
-   private Inventory playerInventory;
+    //Prefabs used for weapons
+    public GameObject Slash;
+    public GameObject Shoot;
+
+    //List to hold items
+    public List<ItemBase> Items = new List<ItemBase>();
+
 
     /*
      * Start Method
@@ -52,8 +57,14 @@ public class Hotbar : MonoBehaviour
         //Sets up reference to the selector object
         selector = GameObject.Find("Selector");
 
-        //Sets up reference to player inventory
-        playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        //Create items in hotbar inventory
+        Items.Add(new Weapon1(Slash));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new Weapon2(Shoot));
+        Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
@@ -65,6 +76,7 @@ public class Hotbar : MonoBehaviour
         numKeyControls = new KeyCode[7];
 
         numKeyControls[0] = KeyCode.Alpha1;
+
         numKeyControls[1] = KeyCode.Alpha2;
         numKeyControls[2] = KeyCode.Alpha3;
         numKeyControls[3] = KeyCode.Alpha4;
@@ -79,11 +91,20 @@ public class Hotbar : MonoBehaviour
      */
     void Update()
     {
+        
         //Checks input from the mouse scroll wheel
         SwitchHotBar_Mouse();
 
         //Checks input from the # hotkeys
         SwitchHotBar_Key();
+
+        if (Input.GetMouseButtonDown(0) == true)
+        {
+            Items[currentSelected].UseItem();
+        }
+
+        Items[0].Update();
+        
     }
 
 
@@ -115,7 +136,6 @@ public class Hotbar : MonoBehaviour
     public void UpdateSelector()
     {
         selector.transform.position = slots[currentSelected].transform.position;
-        playerInventory.SelectedAttack = currentSelected;
     }
 
     /*

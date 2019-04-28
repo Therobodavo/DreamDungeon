@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatScript : BasicEnnemy
+public class FlyGunner : BasicEnnemy
 {
     //ennemy script for the "stamper" ennemy
     //2 attacks. 
@@ -19,12 +19,12 @@ public class BatScript : BasicEnnemy
     float circDir; // current direction of circle
     float speed;
     float wSpeed = 3;
+    public GameObject bullet;
 
-
-
+    public float bulletSpeed = 0.06f;
     public float speedDash = 2f;
     public float speedFly = 3;
-  
+
     public float height1 = 1f;
     public float height2 = 0.4f;
     public float distance;
@@ -33,7 +33,7 @@ public class BatScript : BasicEnnemy
     public void Start()
     {
         init();
-        speed = Random.Range(speedMin,speedMax);
+        speed = Random.Range(speedMin, speedMax);
         circDir = Random.Range(1, 2);
         atCheck = Random.Range(440f, 1200f);
 
@@ -48,7 +48,7 @@ public class BatScript : BasicEnnemy
     {
         float height = height1;
         if (atkState != atkStateType.atkOver && (player.transform.position - transform.position).magnitude < distance)
-              height = height2;
+            height = height2;
 
 
 
@@ -65,11 +65,11 @@ public class BatScript : BasicEnnemy
     public override void chooseAttack()
     {
         atTimer += 1 * Time.deltaTime;
-        if (atkState != atkStateType.atkOver)
-        {
+        if (atkState == atkStateType.atk1)
             dashAttack();
-        }
-        else
+        else if (atkState != atkStateType.atkOver)
+            shootAttack();
+        else 
         {
             circlePlayer();
         }
@@ -80,9 +80,9 @@ public class BatScript : BasicEnnemy
     //enemy will charge at player
     public void dashAttack()
     {
-     Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+        Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
 
-        
+
         force.y = 0;
         GetComponent<Rigidbody>().AddForce(force);
 
@@ -93,19 +93,38 @@ public class BatScript : BasicEnnemy
             if (circDir != 1)
                 circDir = -1;
             speed = Random.Range(speedMin, speedMax);
-            atCheck = Random.Range(440f, 1200f);
+            atCheck = Random.Range(50f, 160f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
+            atkChoice = Random.Range(0, 4);
 
         }
-   
+
+    }
+
+    public void shootAttack()
+    {
+  
+        bullet.transform.position = transform.position;
+        bullet.GetComponent<BulletMove>().isPlayer = false;
+        bullet.GetComponent<BulletMove>().foward = (player.transform.position - transform.position).normalized;
+        bullet.GetComponent<BulletMove>().speed = bulletSpeed;
+        bullet.GetComponent<BulletMove>().push = push;
+        bullet.GetComponent<BulletMove>().damage = damage;
+        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
+        Instantiate(bullet);
+        bullet.SetActive(true);
+        atTimer = 0;
+        atCheck = Random.Range(50f, 160f);
+        atkChoice = Random.Range(0, 4);
+
     }
 
     //enemy will ciricle around player
     public void circlePlayer()
     {
-   
-        circleTimer += Time.deltaTime * 0.5f;
+
+        circleTimer += Time.deltaTime * 1.5f;
 
         float x = Mathf.Cos(circleTimer) * circDir;
         float z = Mathf.Sin(circleTimer) * circDir;
