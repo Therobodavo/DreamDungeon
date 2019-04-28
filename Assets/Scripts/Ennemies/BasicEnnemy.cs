@@ -99,7 +99,7 @@ public class BasicEnnemy : MonoBehaviour
 
 
 
-        Debug.Log(state);
+
         if (state == stateType.active)
         {
            chooseAttack(); //if enemy is active he will attack the player
@@ -188,7 +188,7 @@ public class BasicEnnemy : MonoBehaviour
         if (state != stateType.stunned && state != stateType.dead)
         {
             sTimer = 0;
-            Debug.Log(Time.deltaTime);
+
 
             if (invTimer < 150 * Time.deltaTime)
             {
@@ -261,9 +261,9 @@ public class BasicEnnemy : MonoBehaviour
         }
       
         //even if the play can be seen, if hes too far the ennmy won't attack
-        if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 4)
+        if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 100)
         {
-          //  Debug.Log((player.transform.position.normalized - transform.position.normalized).magnitude * 1000);
+ 
             state = stateType.wounder;
         
         }
@@ -273,7 +273,7 @@ public class BasicEnnemy : MonoBehaviour
     {
         if (collision.transform.tag == "Player" && inState != inStateType.damage && state == stateType.active)
         {
-
+           
             Vector3 force = (player.transform.position - transform.position).normalized;
             force.y = 0;
             atTimer = 0;
