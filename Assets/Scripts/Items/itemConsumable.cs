@@ -1,24 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemConsumable : ItemBase
 {
-    int potionHealth = 0;
-    public GameObject player;
-    Color invis;
+    #region Private Variables
+    private int effect;
+    private int Max_Uses;
+    private int uses;
 
-    public ItemConsumable(int health)
+
+    /* Quality of item
+     private int quality;
+     private string qualityName;
+    */
+    #endregion
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="itemName">Name</param>
+    /// <param name="effect">Effect Code</param>
+    /// <param name="maxuses">Max Uses</param>
+    /// <param name="type">Item Type</param>
+    public ItemConsumable(string itemName, int effect, int maxuses = 1)
     {
-        potionHealth = health;
-        player = GameObject.Find("Player");
-        invis = new Color(255, 255, 255, 0);
+        this.effect = effect;
+        this.Max_Uses = maxuses;
+        uses = Max_Uses;
+    }
+
+    /// <summary>
+    /// Use item: update uses, return effect and uses remaining
+    /// </summary>
+    /// <returns> int array: (effect, uses)</returns>
+    public int[] Use()
+    {
+        uses--;
+        int[] Return = new int[2] { effect, uses };
+        return Return;
+    }
+    /// <summary>
+    /// Return item data
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return base.ToString();
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -29,18 +63,6 @@ public class ItemConsumable : ItemBase
 
     public override void UseItem()
     {
-        if (player.GetComponent<PlayerMovement>().health < 100)
-        {
-            player.GetComponent<Hotbar>().slots[3].GetComponent<Image>().color = invis;
-            player.GetComponent<Hotbar>().consumableFilled = false;
-            if (player.GetComponent<PlayerMovement>().health + potionHealth > 100)
-            {
-                player.GetComponent<PlayerMovement>().health = 100;
-            }
-            else
-            {
-                player.GetComponent<PlayerMovement>().health += potionHealth;
-            }
-        }   
+        Debug.Log("JAMES DO THIS");
     }
 }

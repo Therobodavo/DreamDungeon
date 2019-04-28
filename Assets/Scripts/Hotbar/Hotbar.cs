@@ -11,7 +11,7 @@ using UnityEngine;
 public class Hotbar : MonoBehaviour
 {
    //4 Slot references
-   public GameObject[] slots;
+   private GameObject[] slots;
 
    //Selector object reference
    private GameObject selector;
@@ -38,7 +38,6 @@ public class Hotbar : MonoBehaviour
     public List<ItemBase> Items = new List<ItemBase>();
 
     public bool switchable = true;
-    public bool consumableFilled = false;
 
     /*
      * Start Method
@@ -61,7 +60,7 @@ public class Hotbar : MonoBehaviour
         Items.Add(new Weapon1(Slash));
         Items.Add(new Weapon2(Shoot));
         Items.Add(new Weapon3(beam));
-        Items.Add(new ItemConsumable(25));
+        Items.Add(new ItemConsumable("Health Potion", 0));
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
@@ -86,6 +85,7 @@ public class Hotbar : MonoBehaviour
      */
     void Update()
     {
+        
         //Checks input from the mouse scroll wheel
         SwitchHotBar_Mouse();
 
@@ -98,7 +98,7 @@ public class Hotbar : MonoBehaviour
         }
 
         //Consumables
-        if(Input.GetKeyDown(numKeyControls[3]) && consumableFilled)
+        if(Input.GetKeyDown(numKeyControls[3]))
         {
             Items[3].UseItem();
         }
