@@ -39,7 +39,7 @@ public class BulletMove : MonoBehaviour
 
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
 
-                other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1);
+                other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1, false);
 
             }
         }

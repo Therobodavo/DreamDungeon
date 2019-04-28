@@ -32,7 +32,8 @@ public class Weapon3 : WeaponBase
                     active = true;
                     lastUsed = Time.timeSinceLevelLoad;
                     hit.transform.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                    hit.transform.gameObject.GetComponent<BasicEnnemy>().knockBack(force, (hit.transform.position - player.transform.position).magnitude * 100, 0.1f);
+                    hit.transform.gameObject.GetComponent<BasicEnnemy>().knockBack(force, (hit.transform.position - player.transform.position).magnitude * 100, 0.1f, true);
+                    hit.transform.gameObject.GetComponent<BasicEnnemy>().stunned(200);
                     beam.GetComponent<LineRenderer>().SetPosition(0, player.transform.position);
                     beam.GetComponent<LineRenderer>().SetPosition(1, hit.transform.position);
                     beam.SetActive(true);

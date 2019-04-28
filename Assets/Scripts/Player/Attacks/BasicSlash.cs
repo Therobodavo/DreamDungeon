@@ -5,7 +5,6 @@ using UnityEngine;
 public class BasicSlash : MonoBehaviour
 {
     bool attacking;
-    float pushForce;
 
     Hotbar hotbar;
     public void Start()
@@ -14,7 +13,6 @@ public class BasicSlash : MonoBehaviour
         if (hotbar.Items.Count > 0)
         {
             attacking = ((Weapon1)hotbar.Items[0]).attacking;
-            pushForce = ((Weapon1)hotbar.Items[0]).pushForce;
         }
     }
     public void Update()
@@ -22,7 +20,6 @@ public class BasicSlash : MonoBehaviour
         if (hotbar.Items.Count > 0)
         {
             attacking = ((Weapon1)hotbar.Items[0]).attacking;
-            pushForce = ((Weapon1)hotbar.Items[0]).pushForce;
         }
     }
     private void OnTriggerStay(Collider other)
@@ -34,7 +31,7 @@ public class BasicSlash : MonoBehaviour
                
                 Vector3 force = transform.forward.normalized;
            
-                other.GetComponent<BasicEnnemy>().knockBack(force,350, 2);
+                other.GetComponent<BasicEnnemy>().knockBack(force,250, 2, false);
 
          
 
