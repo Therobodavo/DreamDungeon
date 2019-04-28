@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2886221991529969470}
   - component: {fileID: 2886221991529969469}
   - component: {fileID: 2886221991529969466}
+  - component: {fileID: 114941809062940568}
   m_Layer: 0
   m_Name: Baddie
   m_TagString: Enenmy
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2886221991529969468}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.374, y: 1.1643, z: 5.987}
+  m_LocalPosition: {x: 1981.4584, y: 1.531, z: 1542.002}
   m_LocalScale: {x: 0.2037336, y: 0.2139558, z: 0.0721322}
   m_Children: []
   m_Father: {fileID: 0}
@@ -144,13 +145,30 @@ MonoBehaviour:
   atTimer: 0
   atCheck: 0
   atkChoice: 0
-  velocity: {x: 0, y: 0, z: 0}
   health: 5
+  push: 15
+  damage: 0
   behindPlayer: 0
-  speedMax: 450
-  speedMin: 250
+  speedMax: 250
+  speedMin: 150
   circleDistance: 1
   state: 0
   inState: 0
   atkState: 0
   speedDash: 2
+--- !u!114 &114941809062940568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886221991529969468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e26c2dd836a74d1449a08117cf32fd54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noticeDistance: 5
+  keepDistance: 1
+  speed: 0.5
+  maxSpeed: 5
