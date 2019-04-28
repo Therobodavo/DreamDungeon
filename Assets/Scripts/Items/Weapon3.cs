@@ -24,7 +24,7 @@ public class Weapon3 : WeaponBase
         if (!active)
         {
             attackLine = new Ray(player.transform.position, cam.transform.forward);
-            if (Physics.Raycast(attackLine, out hit, 10f))
+            if (Physics.Raycast(attackLine, out hit, 30f))
             {
                 if (hit.transform.tag == "Enenmy")
                 {
