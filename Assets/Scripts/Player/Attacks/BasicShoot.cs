@@ -8,12 +8,13 @@ public class BasicShoot : MonoBehaviour
   public  float timer;
     public float timeStop;
     public float speed;
-
+    public float force;
+    GameObject playerCam;
     // Start is called before the first frame update
     void Start()
     {
-        timer = 200;
-      
+        timer = 200;  
+        playerCam = GameObject.Find("Player Camera");
     }
 
     // Update is called once per frame
@@ -25,7 +26,7 @@ public class BasicShoot : MonoBehaviour
         {
             bullet.transform.position = transform.position;
             bullet.GetComponent<BulletMove>().isPlayer = true;
-         bullet.GetComponent<BulletMove>().foward = (Camera.main.gameObject.transform.forward).normalized;
+            bullet.GetComponent<BulletMove>().foward = (Camera.main.gameObject.transform.forward).normalized;
             bullet.GetComponent<BulletMove>().speed = speed;
             bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
             Instantiate(bullet);
