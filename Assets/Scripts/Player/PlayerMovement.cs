@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 10.0f;
     [Range(0.01f, 20.0f)]
     public float jumpForce = 10.0f;
-    public int health = 10;
+    public int health = 100;
     public float invcTimer = 10;
 
     public enum invState //determines if player is invicible
@@ -27,6 +27,10 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
         invincability();
+        if (health < 0)
+        {
+            health = 0;
+        }
     }
 
     /// <summary>
