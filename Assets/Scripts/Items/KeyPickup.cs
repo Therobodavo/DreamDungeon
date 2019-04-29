@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PotionPickUp : MonoBehaviour
+public class KeyPickup : MonoBehaviour
 {
     Hotbar bar;
-    Color filled;
+    public int keyVal = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         bar = GameObject.Find("Player").GetComponent<Hotbar>();
-        filled = new Color(255, 255, 255, 255);
     }
 
     // Update is called once per frame
@@ -22,11 +22,14 @@ public class PotionPickUp : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(!bar.consumableFilled)
+        if(keyVal >= 0 && keyVal <= 2)
         {
-            bar.slots[3].GetComponent<Image>().color = filled;
-            bar.consumableFilled = true;
-            Destroy(this.gameObject);
+            if(!bar.keys[keyVal])
+            {
+                bar.keySlots[keyVal].GetComponent<Image>().enabled = true;
+                bar.keys[keyVal] = true;
+                Destroy(this.gameObject);
+            }
         }
     }
 }

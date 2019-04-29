@@ -37,6 +37,7 @@ public class Weapon3 : WeaponBase
                     beam.GetComponent<LineRenderer>().SetPosition(0, player.transform.position);
                     beam.GetComponent<LineRenderer>().SetPosition(1, hit.transform.position);
                     beam.SetActive(true);
+                    player.GetComponent<Hotbar>().switchable = false;
                 }
             }
         }
@@ -49,16 +50,19 @@ public class Weapon3 : WeaponBase
         {
             active = false;
             beam.SetActive(false);
+            player.GetComponent<Hotbar>().switchable = true;
         }
 
         if (active && hit.transform.gameObject != null)
         {
             beam.GetComponent<LineRenderer>().SetPosition(0, player.transform.position);
             beam.GetComponent<LineRenderer>().SetPosition(1, hit.transform.position);
+            player.GetComponent<Hotbar>().switchable = false;
         }
         else
         {
             beam.SetActive(false);
+            player.GetComponent<Hotbar>().switchable = true;
         }
     }
 

@@ -39,6 +39,8 @@ public class Hotbar : MonoBehaviour
 
     public bool switchable = true;
     public bool consumableFilled = false;
+    public bool[] keys;
+    public GameObject[] keySlots;
 
     /*
      * Start Method
@@ -78,6 +80,18 @@ public class Hotbar : MonoBehaviour
         numKeyControls[2] = KeyCode.Alpha3;
         numKeyControls[3] = KeyCode.Alpha4;
 
+        keys = new bool[3];
+        keys[0] = false;
+        keys[1] = false;
+        keys[2] = false;
+
+        keySlots = new GameObject[3];
+        keySlots[0] = GameObject.Find("Key1");
+        keySlots[1] = GameObject.Find("Key2");
+        keySlots[2] = GameObject.Find("Key3");
+
+        currentSelected = 0;
+        selector.transform.position = slots[0].transform.position;
     }
 
     /*
