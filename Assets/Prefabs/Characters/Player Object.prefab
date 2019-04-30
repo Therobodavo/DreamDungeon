@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 20
+  jumpForce: 23
   health: 10
   invcTimer: 10
   inState: 0
@@ -213,6 +213,8 @@ MonoBehaviour:
   Items: []
   switchable: 1
   consumableFilled: 0
+  keys: 
+  keySlots: []
 --- !u!1 &1809691647699473634
 GameObject:
   m_ObjectHideFlags: 0

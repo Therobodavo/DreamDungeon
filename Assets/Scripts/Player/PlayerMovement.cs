@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Range(0.01f, 20.0f)]
     public float speed = 10.0f;
-    [Range(0.01f, 20.0f)]
+    [Range(0.01f, 30.0f)]
     public float jumpForce = 10.0f;
     public int health = 100;
     public float invcTimer = 10;

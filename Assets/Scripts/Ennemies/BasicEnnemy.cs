@@ -274,7 +274,7 @@ public class BasicEnnemy : MonoBehaviour
             }
 
             //even if the play can be seen, if hes too far the ennmy won't attack
-            if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 100)
+            if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 50)
             {
 
                 state = stateType.wounder;
@@ -286,7 +286,7 @@ public class BasicEnnemy : MonoBehaviour
     }
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.transform.tag == "Player" && inState != inStateType.damage && state == stateType.active)
+        if (collision.transform.tag == "Player" && inState == inStateType.none && state == stateType.active )
         {
            
             Vector3 force = (player.transform.position - transform.position).normalized;

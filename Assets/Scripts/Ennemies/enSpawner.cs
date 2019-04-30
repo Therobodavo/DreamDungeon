@@ -5,7 +5,7 @@ using UnityEngine;
 public class enSpawner : MonoBehaviour
 {
     public GameObject enemyPrefab;
-  public GameObject currentEnemy;
+  GameObject currentEnemy;
     GameObject player;
 
 
@@ -25,7 +25,7 @@ public class enSpawner : MonoBehaviour
     
 
         if (Physics.Raycast(ray, out hit))
-        if (currentEnemy == null && (player.transform.position - transform.position).magnitude < 200 && hit.transform.gameObject.tag != "Player"  && hit.transform.gameObject.tag != "Trigger")
+        if (currentEnemy == null && (player.transform.position - transform.position).magnitude > 200 && hit.transform.gameObject.tag != "Player"  && hit.transform.gameObject.tag != "Trigger")
         createBaddie();
 
     }
