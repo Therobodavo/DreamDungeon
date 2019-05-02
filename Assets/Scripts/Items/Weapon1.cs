@@ -8,7 +8,6 @@ public class Weapon1 : WeaponBase
     float timer = 60;
     public Animator animator;
     public  int index;
-    public float pushForce;
     float timeInterval = 0.25f;
     float currentTime = 0f;
     float initialDelay = 0.1f;

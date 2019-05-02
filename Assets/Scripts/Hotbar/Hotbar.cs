@@ -11,7 +11,7 @@ using UnityEngine;
 public class Hotbar : MonoBehaviour
 {
    //4 Slot references
-   private GameObject[] slots;
+   public GameObject[] slots;
 
    //Selector object reference
    private GameObject selector;
@@ -32,11 +32,15 @@ public class Hotbar : MonoBehaviour
     //Prefabs used for weapons
     public GameObject Slash;
     public GameObject Shoot;
+    public GameObject beam;
 
     //List to hold items
     public List<ItemBase> Items = new List<ItemBase>();
 
     public bool switchable = true;
+    public bool consumableFilled = false;
+    public bool[] keys;
+    public GameObject[] keySlots;
 
     /*
      * Start Method
@@ -58,8 +62,8 @@ public class Hotbar : MonoBehaviour
         //Create items in hotbar inventory
         Items.Add(new Weapon1(Slash));
         Items.Add(new Weapon2(Shoot));
-        Items.Add(new Weapon3(Shoot));
-        Items.Add(new ItemConsumable("Health Potion", 0));
+        Items.Add(new Weapon3(beam));
+        Items.Add(new ItemConsumable(25));
 
         //Sets default unlocked slots
         unlockedSlots = new List<int>();
@@ -76,6 +80,18 @@ public class Hotbar : MonoBehaviour
         numKeyControls[2] = KeyCode.Alpha3;
         numKeyControls[3] = KeyCode.Alpha4;
 
+        keys = new bool[3];
+        keys[0] = false;
+        keys[1] = false;
+        keys[2] = false;
+
+        keySlots = new GameObject[3];
+        keySlots[0] = GameObject.Find("Key1");
+        keySlots[1] = GameObject.Find("Key2");
+        keySlots[2] = GameObject.Find("Key3");
+
+        currentSelected = 0;
+        selector.transform.position = slots[0].transform.position;
     }
 
     /*
@@ -84,7 +100,6 @@ public class Hotbar : MonoBehaviour
      */
     void Update()
     {
-        
         //Checks input from the mouse scroll wheel
         SwitchHotBar_Mouse();
 
@@ -97,11 +112,15 @@ public class Hotbar : MonoBehaviour
         }
 
         //Consumables
-        if(Input.GetKeyDown(numKeyControls[3]))
+        if(Input.GetKeyDown(numKeyControls[3]) && consumableFilled)
         {
             Items[3].UseItem();
         }
-        
+
+        for (int i = 0; i < 3; i++)
+        {
+            Items[i].Update();
+        }
     }
 
 

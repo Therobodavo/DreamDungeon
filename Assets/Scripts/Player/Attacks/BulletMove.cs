@@ -13,6 +13,7 @@ public class BulletMove : MonoBehaviour
     public int damage;
     public float push;
 
+    public float time = 300;
     float timer = 0;
 
     // Start is called before the first frame update
@@ -26,7 +27,7 @@ public class BulletMove : MonoBehaviour
     {
         transform.position += (foward * speed);
         timer += 1 * Time.deltaTime;
-        if(timer > 300 * Time.deltaTime)
+        if(timer > time * Time.deltaTime)
             Destroy(gameObject);
     }
 
@@ -39,7 +40,7 @@ public class BulletMove : MonoBehaviour
 
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
 
-                other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1);
+                other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1, false);
 
             }
         }
@@ -51,6 +52,11 @@ public class BulletMove : MonoBehaviour
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
                 other.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
             }
+        }
+
+        if (other.tag == "Wall")
+        {
+            Destroy(gameObject);
         }
 
     }

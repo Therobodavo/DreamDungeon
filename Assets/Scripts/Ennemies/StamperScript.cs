@@ -43,7 +43,8 @@ public class StamperScript : BasicEnnemy
         }
         else
         {
-            circlePlayer();
+             circlePlayer();
+           
         }
 
     }

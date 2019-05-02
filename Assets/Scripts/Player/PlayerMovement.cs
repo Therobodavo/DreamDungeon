@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Range(0.01f, 20.0f)]
     public float speed = 10.0f;
-    [Range(0.01f, 20.0f)]
+    [Range(0.01f, 30.0f)]
     public float jumpForce = 10.0f;
-    public int health = 10;
+    public int health = 100;
     public float invcTimer = 10;
 
+    GameObject fill;
     public enum invState //determines if player is invicible
     {
        isTrue,
@@ -19,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
 
     public invState inState;
 
+    private void Start()
+    {
+        fill = GameObject.Find("HealthFill");
+    }
     /// <summary>
     /// Updates the player position based on input.
     /// </summary>
@@ -27,6 +33,12 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
         invincability();
+        if (health < 0)
+        {
+            health = 0;
+        }
+        fill.GetComponent<Image>().fillAmount = ((float)health) / 100;
+        Debug.Log(health);
     }
 
     /// <summary>
