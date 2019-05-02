@@ -22,7 +22,7 @@ public class HopperScript : BasicEnnemy
 
 
 
-    public float bulletSpeed = 0.1f;
+  float bulletSpeed = 0.001f;
     public GameObject bullet;
 
     public float bulletPush;
@@ -50,9 +50,9 @@ public class HopperScript : BasicEnnemy
 
 
         if (atkState == atkStateType.atk1)
-            diveAttack();
+            bulletAttack();
         else if (atkState != atkStateType.atkOver)       
-            bulletAttack();  
+             diveAttack(); 
         else
             circlePlayer();
 
@@ -71,8 +71,9 @@ public class HopperScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
         bullet.GetComponent<BulletMove>().damage = damage;
         bullet.GetComponent<BulletMove>().push = bulletPush;
+        bullet.GetComponent<BulletMove>().time = 7500;
 
-        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
+    bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         
         Instantiate(bullet);
         bullet.SetActive(true);
@@ -82,7 +83,7 @@ public class HopperScript : BasicEnnemy
         if (circDir != 1)
             circDir = -1;
         speed = Random.Range(speedMin, speedMax);
-        atCheck = Random.Range(240f, 860f);
+        atCheck = Random.Range(540f, 1860f);
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
         atkChoice = Random.Range(0, 3);
  
@@ -94,7 +95,7 @@ public class HopperScript : BasicEnnemy
         Vector3 fwd = transform.TransformDirection(Vector3.down);
         Vector3 force = new Vector3(0, speedJump, 0);
         if (Physics.Raycast(transform.position, fwd, height))
-            GetComponent<Rigidbody>().AddForce(force);
+            finalForce += force;
 
     }
 
@@ -105,12 +106,11 @@ public class HopperScript : BasicEnnemy
         Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
 
         force.y = 0;
-       // transform.position += force;
-        GetComponent<Rigidbody>().AddForce(force);
-    
-        if (atTimer > (atCheck + 1000) * Time.deltaTime)
+        // transform.position += force;
+        finalForce += force;
+
+        if (atTimer > (atCheck + 10000) * Time.deltaTime)
         {
-            speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
@@ -140,7 +140,7 @@ public class HopperScript : BasicEnnemy
 
         // transform.position += targetPos;
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
     }
 
     public override void wonder()
@@ -172,7 +172,7 @@ public class HopperScript : BasicEnnemy
         targetPos.y = 0.0f;
 
         //   transform.position += targetPos;
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
         jumpControl();
     }
 

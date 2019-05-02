@@ -31,7 +31,8 @@ public class BasicEnnemy : MonoBehaviour
     Vector3 position;
     [HideInInspector]
     float maxSpeed;
-
+    [HideInInspector]
+    public Vector3 finalForce;
     
    
     float mass = 3;
@@ -124,8 +125,16 @@ public class BasicEnnemy : MonoBehaviour
         
 
     }
+    private void FixedUpdate()
+    {
+        GetComponent<Rigidbody>().AddForce(finalForce);
+        finalForce = new Vector3(0, 0, 0);
+    }
 
-   public void stunned(float sT)
+
+
+
+    public void stunned(float sT)
     {
         sTimeStop = sT;
         state = stateType.stunned;
@@ -316,5 +325,6 @@ public class BasicEnnemy : MonoBehaviour
         state = stateType.wounder;
         startPos = transform.position;
         startPos.y = 0;
+        finalForce = new Vector3(0, 0, 0);
     }
 }

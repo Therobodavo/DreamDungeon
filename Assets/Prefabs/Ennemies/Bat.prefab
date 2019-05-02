@@ -144,6 +144,7 @@ MonoBehaviour:
   atTimer: 0
   atCheck: 0
   atkChoice: 0
+  finalForce: {x: 0, y: 0, z: 0}
   health: 1
   push: 15
   damage: 0
@@ -154,8 +155,8 @@ MonoBehaviour:
   state: 0
   inState: 0
   atkState: 0
-  speedDash: 5.4
-  speedFly: 3.5
-  height1: 1.5
-  height2: 0.4
-  distance: 1.7
+  speedDash: 3.4
+  speedFly: 0.5
+  height1: 0.8
+  height2: 0.2
+  distance: 2
