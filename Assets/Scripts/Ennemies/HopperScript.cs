@@ -71,7 +71,7 @@ public class HopperScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
         bullet.GetComponent<BulletMove>().damage = damage;
         bullet.GetComponent<BulletMove>().push = bulletPush;
-        bullet.GetComponent<BulletMove>().time = 7500;
+        bullet.GetComponent<BulletMove>().timeAlive = 7.5f;
 
     bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         

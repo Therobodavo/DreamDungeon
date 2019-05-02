@@ -13,21 +13,20 @@ public class BulletMove : MonoBehaviour
     public int damage;
     public float push;
 
-    public float time = 7000;
-    float timer = 0;
+    float timeCreated;
+    public float timeAlive = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        timeCreated = Time.timeSinceLevelLoad;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.position += (foward * speed * Time.deltaTime);
-        timer += 1 * Time.deltaTime;
-        if(timer > time * Time.deltaTime)
+        if(Time.timeSinceLevelLoad - timeCreated > timeAlive)
             Destroy(gameObject);
     }
 
