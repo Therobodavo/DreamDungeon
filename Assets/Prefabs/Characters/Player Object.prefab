@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e208bf1349e831d408ffbc968da53bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 702633347014732257, guid: 01390a0d78933ec48bcc0371a60a2d81, type: 3}
+  bullet: {fileID: 35, guid: 01390a0d78933ec48bcc0371a60a2d81, type: 3}
   timer: 0
-  timeStop: 1.5
-  speed: 0.08
-  force: 0
+  timeStop: 0.8
+  speed: 10
+  force: 0.5
 --- !u!1 &1809691647362734288
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class BulletMove : MonoBehaviour
     public int damage;
     public float push;
 
-    public float time = 300;
+    public float time = 7000;
     float timer = 0;
 
     // Start is called before the first frame update
