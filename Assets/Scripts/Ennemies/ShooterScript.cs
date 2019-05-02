@@ -13,7 +13,7 @@ public class ShooterScript : BasicEnnemy
     float speed;
  
     public GameObject bullet;
-    public float bulletTime = 300;
+    public float bulletTime = 3;
 
 
     public void Start()
@@ -44,7 +44,7 @@ public class ShooterScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().isPlayer = false;
         bullet.GetComponent<BulletMove>().foward = (player.transform.position - transform.position).normalized;
         bullet.GetComponent<BulletMove>().speed = speed;
-        bullet.GetComponent<BulletMove>().time = bulletTime;
+        bullet.GetComponent<BulletMove>().timeAlive = bulletTime;
         bullet.GetComponent<BulletMove>().push = push;
         bullet.GetComponent<BulletMove>().damage = damage;
         bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;

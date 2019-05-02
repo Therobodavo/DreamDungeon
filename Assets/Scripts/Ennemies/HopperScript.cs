@@ -22,7 +22,7 @@ public class HopperScript : BasicEnnemy
 
 
 
-    public float bulletSpeed = 0.1f;
+  float bulletSpeed = 0.01f;
     public GameObject bullet;
 
     public float bulletPush;
@@ -50,9 +50,9 @@ public class HopperScript : BasicEnnemy
 
 
         if (atkState == atkStateType.atk1)
-            diveAttack();
+            bulletAttack();
         else if (atkState != atkStateType.atkOver)       
-            bulletAttack();  
+             diveAttack(); 
         else
             circlePlayer();
 
@@ -71,8 +71,9 @@ public class HopperScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
         bullet.GetComponent<BulletMove>().damage = damage;
         bullet.GetComponent<BulletMove>().push = bulletPush;
+        bullet.GetComponent<BulletMove>().timeAlive = 7.5f;
 
-        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
+    bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         
         Instantiate(bullet);
         bullet.SetActive(true);
@@ -82,7 +83,7 @@ public class HopperScript : BasicEnnemy
         if (circDir != 1)
             circDir = -1;
         speed = Random.Range(speedMin, speedMax);
-        atCheck = Random.Range(240f, 860f);
+        atCheck = Random.Range(540f, 460f);
         circleTimer += Random.Range(0, 360) * Time.deltaTime;
         atkChoice = Random.Range(0, 3);
  
@@ -94,7 +95,7 @@ public class HopperScript : BasicEnnemy
         Vector3 fwd = transform.TransformDirection(Vector3.down);
         Vector3 force = new Vector3(0, speedJump, 0);
         if (Physics.Raycast(transform.position, fwd, height))
-            GetComponent<Rigidbody>().AddForce(force);
+            finalForce += force;
 
     }
 
@@ -102,20 +103,19 @@ public class HopperScript : BasicEnnemy
     public void diveAttack()
     {
         
-        Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+        Vector3 force = (player.transform.position - transform.position).normalized * speed * speedDash;
 
         force.y = 0;
-       // transform.position += force;
-        GetComponent<Rigidbody>().AddForce(force);
-    
+        // transform.position += force;
+        finalForce += force;
+
         if (atTimer > (atCheck + 1000) * Time.deltaTime)
         {
-            speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
             speed = Random.Range(speedMin, speedMax);
-            atCheck = Random.Range(240f, 860f);
+            atCheck = Random.Range(240f, 460f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
            atkChoice = Random.Range(0, 3);
@@ -134,13 +134,13 @@ public class HopperScript : BasicEnnemy
 
         Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * Random.Range(circleDistance - 0.5f, circleDistance));
 
-        targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * speed;
 
         targetPos.y = 0;
 
         // transform.position += targetPos;
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
     }
 
     public override void wonder()
@@ -167,12 +167,12 @@ public class HopperScript : BasicEnnemy
 
         }
 
-        targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * wSpeed ;
 
         targetPos.y = 0.0f;
 
         //   transform.position += targetPos;
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
         jumpControl();
     }
 
