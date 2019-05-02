@@ -31,7 +31,8 @@ public class BasicEnnemy : MonoBehaviour
     Vector3 position;
     [HideInInspector]
     float maxSpeed;
-
+    [HideInInspector]
+    public Vector3 finalForce;
     
    
     float mass = 3;
@@ -93,7 +94,15 @@ public class BasicEnnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(behindPlayer)
+       
+
+        
+
+    }
+    private void FixedUpdate()
+    {
+
+        if (behindPlayer)
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 0.5f);
         else if (inState == inStateType.none)
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
@@ -106,26 +115,28 @@ public class BasicEnnemy : MonoBehaviour
 
         if (state == stateType.active)
         {
-           chooseAttack(); //if enemy is active he will attack the player
-            
-           attackTimer(); //controls the attack timer and attack stats   
-          
+            chooseAttack(); //if enemy is active he will attack the player
 
-        }     
-        else if(state == stateType.wounder)
+            attackTimer(); //controls the attack timer and attack stats   
+
+
+        }
+        else if (state == stateType.wounder)
         {
-           wonder(); //if enemy isn't active he will wonder around
+            wonder(); //if enemy isn't active he will wonder around
 
-        }      
-     
-       
+        }
+
+
         behindPlayer = false;
-
-        
-
+        GetComponent<Rigidbody>().AddForce(finalForce * Time.fixedDeltaTime);
+        finalForce = new Vector3(0, 0, 0);
     }
 
-   public void stunned(float sT)
+
+
+
+    public void stunned(float sT)
     {
         sTimeStop = sT;
         state = stateType.stunned;
@@ -200,7 +211,7 @@ public class BasicEnnemy : MonoBehaviour
             sTimer = 0;
 
 
-            if (invTimer < 150 * Time.deltaTime)
+            if (invTimer < 30 * Time.deltaTime)
             {
                 invTimer += 1 * Time.deltaTime;
                 inState = inStateType.damage;
@@ -316,5 +327,6 @@ public class BasicEnnemy : MonoBehaviour
         state = stateType.wounder;
         startPos = transform.position;
         startPos.y = 0;
+        finalForce = new Vector3(0, 0, 0);
     }
 }

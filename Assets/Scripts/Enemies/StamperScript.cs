@@ -52,8 +52,8 @@ public class StamperScript : BasicEnnemy
     //enemy will charge at player
     public void dashAttack()
     {
-      Vector3  targetPos = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
-        GetComponent<Rigidbody>().AddForce(targetPos);
+      Vector3  targetPos = (player.transform.position - transform.position).normalized * speed  * speedDash;
+        finalForce += targetPos;
 
         if (atTimer > (atCheck + 1000) * Time.deltaTime)
         {
@@ -79,12 +79,11 @@ public class StamperScript : BasicEnnemy
 
         Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
-        targetPos = (targetPos - transform.position).normalized * speedMax * 2.0f * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * speedMax * 1.5f;
 
         targetPos.y = 0;
 
-      //  transform.position += targetPos;
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
     }
 
     public override void wonder()
@@ -110,11 +109,11 @@ public class StamperScript : BasicEnnemy
 
         }
        
-        targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * wSpeed;
 
         targetPos.y = 0;
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
 
     }
     

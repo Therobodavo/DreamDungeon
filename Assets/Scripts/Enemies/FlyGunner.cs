@@ -55,7 +55,7 @@ public class FlyGunner : BasicEnnemy
         Vector3 fwd = transform.TransformDirection(Vector3.down);
         Vector3 force = new Vector3(0, speedFly, 0);
         if (Physics.Raycast(transform.position, fwd, height))
-            GetComponent<Rigidbody>().AddForce(force);
+            finalForce += force;
 
     }
 
@@ -80,13 +80,13 @@ public class FlyGunner : BasicEnnemy
     //enemy will charge at player
     public void dashAttack()
     {
-        Vector3 force = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+        Vector3 force = (player.transform.position - transform.position).normalized * speed  * speedDash;
 
 
         force.y = 0;
-        GetComponent<Rigidbody>().AddForce(force);
+        finalForce += force;
 
-        if (atTimer > (atCheck + 900) * Time.deltaTime)
+        if (atTimer > (atCheck + 300) * Time.deltaTime)
         {
             speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
@@ -96,7 +96,7 @@ public class FlyGunner : BasicEnnemy
             atCheck = Random.Range(50f, 160f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
-            atkChoice = Random.Range(0, 4);
+            atkChoice = Random.Range(2, 4);
 
         }
 
@@ -131,13 +131,11 @@ public class FlyGunner : BasicEnnemy
 
         Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
-        targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * speed;
 
         targetPos.y = 0f;
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
-        Vector3 vel = Vector3.ClampMagnitude(GetComponent<Rigidbody>().velocity, clampSpeed);
-        GetComponent<Rigidbody>().velocity = vel;
+        finalForce += targetPos;
 
     }
 
@@ -164,11 +162,11 @@ public class FlyGunner : BasicEnnemy
 
         }
 
-        targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * wSpeed;
 
         targetPos.y = 0;
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
         // 
         flying();
     }
