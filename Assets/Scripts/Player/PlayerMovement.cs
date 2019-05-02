@@ -78,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
             movement += -this.transform.forward * speed;
         }
 
-        this.transform.position += movement * .001f;
+        this.transform.position += movement * Time.deltaTime; 
     }
 
     /// <summary>

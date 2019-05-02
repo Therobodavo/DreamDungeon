@@ -25,7 +25,7 @@ public class BulletMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += (foward * speed);
+        transform.position += (foward * speed * Time.deltaTime);
         timer += 1 * Time.deltaTime;
         if(timer > time * Time.deltaTime)
             Destroy(gameObject);

@@ -52,7 +52,7 @@ public class StamperScript : BasicEnnemy
     //enemy will charge at player
     public void dashAttack()
     {
-      Vector3  targetPos = (player.transform.position - transform.position).normalized * speed * Time.deltaTime * speedDash;
+      Vector3  targetPos = (player.transform.position - transform.position).normalized * speed  * speedDash;
         finalForce += targetPos;
 
         if (atTimer > (atCheck + 1000) * Time.deltaTime)
@@ -79,7 +79,7 @@ public class StamperScript : BasicEnnemy
 
         Vector3 targetPos = player.transform.position + (new Vector3(x, 0, z) * circleDistance);
 
-        targetPos = (targetPos - transform.position).normalized * speedMax * 2.5f * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * speedMax * 1.5f;
 
         targetPos.y = 0;
 
@@ -109,7 +109,7 @@ public class StamperScript : BasicEnnemy
 
         }
        
-        targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
+        targetPos = (targetPos - transform.position).normalized * wSpeed;
 
         targetPos.y = 0;
 

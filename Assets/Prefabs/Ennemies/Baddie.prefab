@@ -150,9 +150,9 @@ MonoBehaviour:
   damage: 2
   behindPlayer: 0
   speedMax: 300
-  speedMin: 150
-  circleDistance: 1.5
+  speedMin: 200
+  circleDistance: 2
   state: 0
   inState: 0
   atkState: 0
-  speedDash: 2
+  speedDash: 1.5
