@@ -22,7 +22,7 @@ public class PotionPickUp : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(!bar.consumableFilled)
+        if(!bar.consumableFilled && other.tag == "Player")
         {
             bar.slots[3].GetComponent<Image>().color = filled;
             bar.consumableFilled = true;

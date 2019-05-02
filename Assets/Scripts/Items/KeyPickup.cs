@@ -22,7 +22,7 @@ public class KeyPickup : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if(keyVal >= 0 && keyVal <= 2)
+        if(keyVal >= 0 && keyVal <= 2 && other.tag == "Player")
         {
             if(!bar.keys[keyVal])
             {
