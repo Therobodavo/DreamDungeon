@@ -54,7 +54,7 @@ public class BossScript : BasicEnnemy
         Vector3 fwd = transform.TransformDirection(Vector3.down);
         Vector3 force = new Vector3(0, speedFly, 0);
         if (Physics.Raycast(transform.position, fwd, height))
-            GetComponent<Rigidbody>().AddForce(force);
+            finalForce += force;
 
     }
 
@@ -76,16 +76,13 @@ public class BossScript : BasicEnnemy
             dashAttack();         
         else if (atkState == atkStateType.atk5)
         {
-            spawnFire1();
-            spawnFire2();
-            spawnFire2();
             shootAttack();
             shootAttack();
         }           
         else if (atkState == atkStateType.atk6)
         {
             spawnFire1();
-            spawnFire1();
+            spawnFire2();
             spawnFire1();
         }      
               
@@ -116,7 +113,7 @@ public class BossScript : BasicEnnemy
         Instantiate(fire);
         fire.SetActive(true);
         atTimer = 0;
-        atCheck = Random.Range(500f, 1600f);
+        atCheck = Random.Range(100f, 200f);
         atkChoice = Random.Range(0, 9);
     }
 
@@ -126,7 +123,7 @@ public class BossScript : BasicEnnemy
         Instantiate(fire2);
         fire2.SetActive(true);
         atTimer = 0;
-        atCheck = Random.Range(500f, 1600f);
+        atCheck = Random.Range(100f, 200f);
         atkChoice = Random.Range(0, 9);
     }
 
@@ -138,7 +135,7 @@ public class BossScript : BasicEnnemy
         Instantiate(bat);
         bat.SetActive(true);
         atTimer = 0;
-        atCheck = Random.Range(1500f, 2500f);
+        atCheck = Random.Range(100f, 350f);
         atkChoice = Random.Range(0, 9);
     }
     //enemy will charge at player
@@ -148,16 +145,16 @@ public class BossScript : BasicEnnemy
 
 
         force.y = 0;
-        GetComponent<Rigidbody>().AddForce(force);
+        finalForce += force;
 
-        if (atTimer > (atCheck + 900) * Time.deltaTime)
+        if (atTimer > (atCheck + 300) * Time.deltaTime)
         {
             speed = Random.Range(2f, 4.5f);
             circDir = Random.Range(1, 2);
             if (circDir != 1)
                 circDir = -1;
             speed = Random.Range(speedMin, speedMax);
-            atCheck = Random.Range(50f, 160f);
+            atCheck = Random.Range(50f, 100f);
             circleTimer += Random.Range(0, 360) * Time.deltaTime;
             atTimer = 0;
             atkChoice = Random.Range(0, 9);
@@ -202,11 +199,10 @@ public class BossScript : BasicEnnemy
 
         targetPos = (targetPos - transform.position).normalized * speed * Time.deltaTime;
 
-   
 
-        GetComponent<Rigidbody>().AddForce(targetPos);
-        Vector3 vel = Vector3.ClampMagnitude(GetComponent<Rigidbody>().velocity, clampSpeed);
-        GetComponent<Rigidbody>().velocity = vel;
+
+        finalForce += targetPos;
+
 
     }
 
@@ -236,8 +232,7 @@ public class BossScript : BasicEnnemy
         targetPos = (targetPos - transform.position).normalized * wSpeed * Time.deltaTime;
 
         targetPos.y = 0;
-
-        GetComponent<Rigidbody>().AddForce(targetPos);
+        finalForce += targetPos;
         // 
         flying();
     }

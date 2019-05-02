@@ -17,7 +17,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Dungeon.unity
     guid: 1a71c5975e5b7f84eb94a28f61824405
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TestScenes/DebugDungeon.unity
     guid: 3407ba0c69a2c0b4695e3acc4ac47267
+  - enabled: 1
+    path: Assets/Scenes/TestScenes/BossRoom.unity
+    guid: 378b900830f3b7948946e553dfa89e11
   m_configObjects: {}
