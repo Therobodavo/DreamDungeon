@@ -90,8 +90,7 @@ public class Hotbar : MonoBehaviour
         keySlots[1] = GameObject.Find("Key2");
         keySlots[2] = GameObject.Find("Key3");
 
-        currentSelected = 0;
-        selector.transform.position = slots[0].transform.position;
+        UpdateSelector();
     }
 
     /*
@@ -100,6 +99,7 @@ public class Hotbar : MonoBehaviour
      */
     void Update()
     {
+        UpdateSelector();
         //Checks input from the mouse scroll wheel
         SwitchHotBar_Mouse();
 
