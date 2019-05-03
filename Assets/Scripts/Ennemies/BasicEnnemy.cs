@@ -211,7 +211,7 @@ public class BasicEnnemy : MonoBehaviour
             sTimer = 0;
 
 
-            if (invTimer < 30 * Time.deltaTime)
+            if (invTimer < 15 * Time.deltaTime)
             {
                 invTimer += 1 * Time.deltaTime;
                 inState = inStateType.damage;
@@ -244,7 +244,7 @@ public class BasicEnnemy : MonoBehaviour
             else if(state == stateType.dead)
             {
                 inState = inStateType.damage;
-                if (sTimer >= 200 * Time.deltaTime)
+                if (sTimer >= 50 * Time.deltaTime)
                 {
                     Destroy(gameObject);
                 }

@@ -23,7 +23,7 @@ public class fireHazard : MonoBehaviour
      void Update()
     {
         timerAlive += 1 * Time.deltaTime;
-        if (timerAlive > 6000 * Time.deltaTime)
+        if (timerAlive > 2000 * Time.deltaTime)
             Destroy(gameObject);
     }
     private void OnCollisionStay(Collision collision)
