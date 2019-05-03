@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1897257fb82aa6d4b8696c1768b1be34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraName: Player Camera
   interpolation: 1
 --- !u!65 &5164035151022038457
 BoxCollider:
@@ -145,7 +146,7 @@ MonoBehaviour:
   atCheck: 0
   atkChoice: 0
   finalForce: {x: 0, y: 0, z: 0}
-  health: 5
+  health: 2
   push: 10
   damage: 2
   behindPlayer: 0
