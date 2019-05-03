@@ -536,7 +536,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d1547c4aa630b46877acf8becb9f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutSpeed: 5
+  sceneName: Cutscene
+  fadeOutSpeed: 1
 --- !u!4 &709755962
 Transform:
   m_ObjectHideFlags: 0
