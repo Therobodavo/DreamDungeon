@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  jumpForce: 23
+  jumpForce: 30
   health: 10
   invcTimer: 10
   inState: 0
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 1809691647757598771}
   m_Layer: 0
   m_Name: Player Object
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -145,7 +145,7 @@ MonoBehaviour:
   atCheck: 0
   atkChoice: 0
   finalForce: {x: 0, y: 0, z: 0}
-  health: 3
+  health: 6
   push: 10
   damage: 0
   behindPlayer: 0
@@ -155,7 +155,7 @@ MonoBehaviour:
   state: 0
   inState: 0
   atkState: 0
-  bullet: {fileID: 35, guid: 4eb75c73a5169fe4395f9aef42758d38, type: 3}
+  bullet: {fileID: 527602852309731805, guid: 4eb75c73a5169fe4395f9aef42758d38, type: 3}
   bulletPush: 10
   speedJump: 10000
   speedDash: 2

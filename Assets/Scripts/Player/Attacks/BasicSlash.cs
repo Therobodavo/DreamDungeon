@@ -31,7 +31,7 @@ public class BasicSlash : MonoBehaviour
                
                 Vector3 force = transform.forward.normalized;
            
-                other.GetComponent<BasicEnnemy>().knockBack(force,550, 2, false);
+                other.GetComponent<BasicEnnemy>().knockBack(force,250, 2, false);
 
          
 
