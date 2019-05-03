@@ -32,10 +32,8 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log(other.tag);
         if (isPlayer)
         {
-            Debug.Log(other.tag);
             if (other.tag == "Enenmy")
             {
 
@@ -46,7 +44,6 @@ public class BulletMove : MonoBehaviour
             }
             else if (other.tag == "Web")
             {
-                Debug.Log(other.tag);
                 Destroy(other.gameObject);
             }
         }

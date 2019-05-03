@@ -111,7 +111,6 @@ public class FlyGunner : BasicEnnemy
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
         bullet.GetComponent<BulletMove>().push = push;
         bullet.GetComponent<BulletMove>().damage = damage;
-        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         Instantiate(bullet);
         bullet.SetActive(true);
         atTimer = 0;

@@ -12,6 +12,9 @@ public class C_LookAt : MonoBehaviour {
     void Update ()
     {
         //Make the current transform look at the target
-        this.transform.LookAt(target.transform);
+        if(target)
+        {
+            this.transform.LookAt(target.transform);
+        }
 	}
 }

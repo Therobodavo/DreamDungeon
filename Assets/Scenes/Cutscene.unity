@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7458a78a14038c346b1bdc5d4076dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: NULL
+  nextSceneName: Dungeon
   cutsceneImages:
   - {fileID: 21300000, guid: 5d716122d6933fd4ba609886c2a92b03, type: 3}
   - {fileID: 21300000, guid: 02e5488bee2cfe046b482309e0741ae9, type: 3}

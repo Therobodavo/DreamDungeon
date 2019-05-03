@@ -47,7 +47,6 @@ public class ShooterScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().timeAlive = bulletTime;
         bullet.GetComponent<BulletMove>().push = push;
         bullet.GetComponent<BulletMove>().damage = damage;
-        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         Instantiate(bullet);
         bullet.SetActive(true);
         atTimer = 0;
