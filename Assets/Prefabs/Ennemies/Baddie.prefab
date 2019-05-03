@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1897257fb82aa6d4b8696c1768b1be34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraName: Player Camera
   interpolation: 1
 --- !u!65 &44
 BoxCollider:
