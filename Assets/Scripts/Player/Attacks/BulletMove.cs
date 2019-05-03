@@ -33,8 +33,10 @@ public class BulletMove : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log(other.tag);
         if (isPlayer)
         {
+            Debug.Log(other.tag);
             if (other.tag == "Enenmy")
             {
 
@@ -43,7 +45,13 @@ public class BulletMove : MonoBehaviour
                 other.GetComponent<BasicEnnemy>().knockBack(force, 200, 1, false);
 
             }
+            else if (other.tag == "Web")
+            {
+                Debug.Log(other.tag);
+                Destroy(other.gameObject);
+            }
         }
+        
         else
         {
             ///need to make it so enemies give the info needed for this
@@ -51,7 +59,7 @@ public class BulletMove : MonoBehaviour
             {
                 Vector3 force = (other.gameObject.transform.position - transform.position).normalized;
                 other.GetComponent<PlayerMovement>().Push(force, push * 100, damage);
-            }
+            } 
         }
 
         if (other.tag == "Wall")

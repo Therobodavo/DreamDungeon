@@ -38,7 +38,6 @@ public class PlayerMovement : MonoBehaviour
             health = 0;
         }
         fill.GetComponent<Image>().fillAmount = ((float)health) / 100;
-        Debug.Log(health);
     }
 
     /// <summary>

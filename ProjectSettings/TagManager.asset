@@ -8,6 +8,7 @@ TagManager:
   - Pushable
   - Wall
   - Trigger
+  - Web
   layers:
   - Default
   - TransparentFX

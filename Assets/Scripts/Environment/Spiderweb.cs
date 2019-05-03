@@ -16,5 +16,13 @@ public class Spiderweb : MonoBehaviour
         
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name == "bullet" || other.gameObject.name == "bullet(Clone)")
+        {
+        Destroy(transform.parent.gameObject);
+        }
+    }
+
 }
  
