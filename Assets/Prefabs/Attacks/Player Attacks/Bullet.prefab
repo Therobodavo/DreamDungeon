@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 62859469453283394}
-  - component: {fileID: 3479519223890308229}
-  - component: {fileID: 8874399682040391193}
-  - component: {fileID: 9191022010347073890}
   - component: {fileID: 4287939144169263913}
+  - component: {fileID: 8744045513259821256}
+  - component: {fileID: 5331221450868192712}
+  - component: {fileID: 4432451016503860689}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -28,13 +28,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 702633347014732257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 197.77536, y: -13.488571, z: 731.022}
-  m_LocalScale: {x: 0.11226677, y: 0.12351003, z: 0.5808817}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.11, y: 0.12, z: 0.5808817}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3479519223890308229
+--- !u!65 &4287939144169263913
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702633347014732257}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 0.36362082}
+  m_Center: {x: 0, y: 0, z: -0.007601087}
+--- !u!212 &8744045513259821256
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -82,7 +95,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8874399682040391193
+--- !u!114 &5331221450868192712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
---- !u!114 &9191022010347073890
+--- !u!114 &4432451016503860689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,22 +120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4431405459390749b13010709171515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foward: {x: 0.652751, y: -0.75241226, z: -0.088271976}
-  speed: 0.08
+  foward: {x: -1, y: 0.08, z: 0.06}
+  speed: 10
   isPlayer: 1
-  damage: 0
+  damage: 3
   push: 0
-  time: 300
---- !u!65 &4287939144169263913
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 702633347014732257}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 0.36362082}
-  m_Center: {x: 0, y: 0, z: -0.007601087}
+  timeAlive: 5

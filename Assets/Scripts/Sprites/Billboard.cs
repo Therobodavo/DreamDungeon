@@ -5,6 +5,7 @@ using UnityEngine;
 public class Billboard : MonoBehaviour
 {
     #region Public Variables
+    public string cameraName = "Player Camera";
     [Header("Billboarding Speed")]
     [Tooltip("Speed")]
     [Range(0.0f, 1.0f)]
@@ -21,7 +22,7 @@ public class Billboard : MonoBehaviour
     /// </summary>
     void Start()
     {
-        target = GameObject.Find("Player Camera"); //Camera needs to be named "Player Camera"
+        target = GameObject.Find(cameraName); //Camera needs to be named "Player Camera"
     }
 
     /// <summary>

@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e208bf1349e831d408ffbc968da53bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 702633347014732257, guid: 01390a0d78933ec48bcc0371a60a2d81, type: 3}
+  bullet: {fileID: 54, guid: 01390a0d78933ec48bcc0371a60a2d81, type: 3}
   timer: 0
-  timeStop: 1.5
-  speed: 0.08
-  force: 0
+  timeStop: 0.8
+  speed: 10
+  force: 0.5
 --- !u!1 &1809691647362734288
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbc1bd60ed5eb243bff3c59fdce7cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 2
   jumpForce: 23
   health: 10
   invcTimer: 10
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 1809691647757598771}
   m_Layer: 0
   m_Name: Player Object
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

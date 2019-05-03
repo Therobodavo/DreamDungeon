@@ -11,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce = 10.0f;
     public int health = 100;
     public float invcTimer = 10;
+    Vector3 jump;
+    bool test;
 
     GameObject fill;
     public enum invState //determines if player is invicible
@@ -24,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         fill = GameObject.Find("HealthFill");
+        jump = new Vector3(0, 0, 0);
+        test = false;
     }
     /// <summary>
     /// Updates the player position based on input.
@@ -38,6 +42,15 @@ public class PlayerMovement : MonoBehaviour
             health = 0;
         }
         fill.GetComponent<Image>().fillAmount = ((float)health) / 100;
+       // Debug.Log(health);
+    }
+    private void FixedUpdate()
+    {
+      
+        this.GetComponent<Rigidbody>().AddForce(jump);
+            jump = new Vector3(0, 0, 0);
+
+
     }
 
     /// <summary>
@@ -65,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
             movement += -this.transform.forward * speed;
         }
 
-        this.transform.position += movement * .001f;
+        this.transform.position += movement * Time.deltaTime; 
     }
 
     /// <summary>
@@ -73,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void Jump()
     {
+       
         if (Input.GetKeyDown(KeyCode.Space))
         {
             RaycastHit hit;
@@ -80,10 +94,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (Vector3.Distance(this.transform.position, hit.point) < .5f)
                 {
-                    this.GetComponent<Rigidbody>().AddForce(this.transform.up * jumpForce * 50.0f);
+
+                    jump = this.transform.up * jumpForce * 50.0f;
                 }
+                
+                
             }
         }
+
+
+
     }
 
     public void Push(Vector3 Force, float weight, int damage)
