@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 159.92274, y: -23.291784, z: 710.3799}
+  m_LocalPosition: {x: 175.35843, y: -23.975534, z: 709.3063}
   m_LocalScale: {x: 0.09061914, y: 0.09061914, z: 0.09061914}
   m_Children: []
   m_Father: {fileID: 0}
@@ -138,12 +138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4431405459390749b13010709171515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  foward: {x: 0.72640896, y: -0.48445353, z: -0.48747814}
-  speed: 2.79753
+  foward: {x: -0.91202325, y: 0.39703533, z: -0.10284259}
+  speed: 2.2910578
   isPlayer: 0
   damage: 2
   push: 10
-  time: 50000
+  timeAlive: 50000
 --- !u!114 &45
 MonoBehaviour:
   m_ObjectHideFlags: 0
