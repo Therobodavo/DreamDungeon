@@ -15,7 +15,7 @@ public class Lava : MonoBehaviour
             other.GetComponent<PlayerMovement>().Push(new Vector3(0, 0, 0), 0, 1);
 
         }
-        else if (other.tag == "Enemy")
+        else if (other.tag == "Enemy" || other.tag == "Enenmy")
         {
             Destroy(other);
 
