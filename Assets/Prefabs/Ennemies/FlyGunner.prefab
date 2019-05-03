@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 708768302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 189.43, y: -7.5, z: 717.18}
+  m_LocalPosition: {x: 22.922245, y: 7.1551056, z: -40.32846}
   m_LocalScale: {x: 0.26743007, y: 0.28084818, z: 0.094684035}
   m_Children: []
   m_Father: {fileID: 0}
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1897257fb82aa6d4b8696c1768b1be34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraName: Player Camera
   interpolation: 1
 --- !u!65 &708768305
 BoxCollider:
@@ -145,9 +146,9 @@ MonoBehaviour:
   atCheck: 0
   atkChoice: 0
   finalForce: {x: 0, y: 0, z: 0}
-  health: 5
+  health: 3
   push: 15
-  damage: 3
+  damage: 5
   behindPlayer: 0
   speedMax: 25
   speedMin: 10

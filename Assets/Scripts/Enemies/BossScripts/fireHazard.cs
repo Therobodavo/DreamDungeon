@@ -33,7 +33,7 @@ public class fireHazard : MonoBehaviour
 
             Vector3 force = (player.transform.position - transform.position).normalized;
             force.y = 0;
-            player.GetComponent<PlayerMovement>().Push(force, 1000, 2);
+            player.GetComponent<PlayerMovement>().Push(force, 1000, 5);
             Destroy(gameObject);
 
 
