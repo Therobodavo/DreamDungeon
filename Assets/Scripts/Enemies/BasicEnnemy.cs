@@ -285,7 +285,7 @@ public class BasicEnnemy : MonoBehaviour
             }
 
             //even if the play can be seen, if hes too far the ennmy won't attack
-            if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 50)
+            if ((player.transform.position.normalized - transform.position.normalized).magnitude * 1000 > 5000)
             {
 
                 state = stateType.wounder;
