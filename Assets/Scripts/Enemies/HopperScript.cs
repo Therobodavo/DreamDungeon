@@ -22,7 +22,7 @@ public class HopperScript : BasicEnnemy
 
 
 
-  float bulletSpeed = 0.01f;
+  float bulletSpeed = 3;
     public GameObject bullet;
 
     public float bulletPush;
