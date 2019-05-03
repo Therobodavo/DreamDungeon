@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
@@ -37,12 +38,12 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
         invincability();
-        if (health < 0)
+        if (health <= 0)
         {
+            SceneManager.LoadScene("Dungeon");
             health = 0;
         }
         fill.GetComponent<Image>().fillAmount = ((float)health) / 100;
-       // Debug.Log(health);
     }
     private void FixedUpdate()
     {

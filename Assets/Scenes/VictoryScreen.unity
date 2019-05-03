@@ -300,11 +300,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7458a78a14038c346b1bdc5d4076dd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: NULL
+  nextSceneName: TitleScreen
   cutsceneImages:
   - {fileID: 21300000, guid: abd6b4df173c0af46aa34cd9a7a22d74, type: 3}
   fadeSpeed: 1
-  keepSpeed: 9999999
+  keepSpeed: 10
   resizeSpeed: 0
 --- !u!114 &1584528433
 MonoBehaviour:

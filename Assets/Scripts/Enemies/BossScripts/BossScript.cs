@@ -172,7 +172,6 @@ public class BossScript : BasicEnnemy
         bullet.GetComponent<BulletMove>().speed = bulletSpeed;
         bullet.GetComponent<BulletMove>().push = push;
         bullet.GetComponent<BulletMove>().damage = damage;
-        bullet.GetComponent<C_LookAt>().target = Camera.main.gameObject;
         bullet.transform.position = transform.position;
         Instantiate(bullet);
         bullet.transform.position = transform.position + new Vector3(0.5f,0.5f,0.5f);

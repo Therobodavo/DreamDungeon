@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BasicEnnemy : MonoBehaviour
 {
@@ -246,6 +247,10 @@ public class BasicEnnemy : MonoBehaviour
                 inState = inStateType.damage;
                 if (sTimer >= 200 * Time.deltaTime)
                 {
+                    if(this.gameObject.name.Contains("Boss"))
+                    {
+                        SceneManager.LoadScene("VictoryScreen");
+                    }
                     Destroy(gameObject);
                 }
             }

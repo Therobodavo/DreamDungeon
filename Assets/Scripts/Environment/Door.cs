@@ -78,8 +78,11 @@ public class Door : MonoBehaviour
             activeTrap = true;
             foreach (GameObject eni in guards)
             {
-                if (!eni.activeSelf)
-                    eni.SetActive(true);
+                if(eni.gameObject != null)
+                {
+                    if (!eni.activeSelf)
+                        eni.SetActive(true);
+                }
             }
         }
     }
